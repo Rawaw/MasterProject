@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class CreatorMapController : MonoBehaviour
 {
-    public float speed = 10f;
+    public float speed;
+    public float minZoom;
+    public float maxZoom;
 
     // Start is called before the first frame update
     void Start()
@@ -20,9 +22,13 @@ public class CreatorMapController : MonoBehaviour
         transform.Translate(xInput*Time.deltaTime*speed,yInput*Time.deltaTime*speed,0f);
 
         Camera.main.orthographicSize -= Input.mouseScrollDelta.y;
-        /*
-        if(transform.position.y < Camera.main.orthographicSize){
-            transform.position = new Vector3(transform.position.x, Camera.main.orthographicSize, transform.position.z);
-        }*/
+
+        if(Camera.main.orthographicSize < minZoom){
+            Camera.main.orthographicSize = minZoom;
+        }
+
+        if(Camera.main.orthographicSize > maxZoom){
+            Camera.main.orthographicSize = maxZoom;
+        }
     }
 }
