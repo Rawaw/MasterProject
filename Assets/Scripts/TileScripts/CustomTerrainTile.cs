@@ -24,6 +24,7 @@ public class CustomTerrainTile : Tile
     // As the rotation is determined by the RoadTile, the TileFlags.OverrideTransform is set for the tile.
     public override void GetTileData(Vector3Int location, ITilemap tilemap, ref TileData tileData)
     {
+        //base.GetTileData(location, tilemap, ref tileData);
         int mask = HasTerrainTile(tilemap, location + new Vector3Int(0, 1, 0)) ? 1 : 0;
         mask += HasTerrainTile(tilemap, location + new Vector3Int(1, 0, 0)) ? 2 : 0;
         mask += HasTerrainTile(tilemap, location + new Vector3Int(0, -1, 0)) ? 4 : 0;
@@ -42,7 +43,8 @@ public class CustomTerrainTile : Tile
         else
         {
         Debug.LogWarning("Not enough sprites in TerrainTile instance");
-}
+        }
+        tileData.colliderType = Tile.ColliderType.Sprite;
     }
     // This determines if the Tile at the position is the same RoadTile.
     private bool HasTerrainTile(ITilemap tilemap, Vector3Int position)
