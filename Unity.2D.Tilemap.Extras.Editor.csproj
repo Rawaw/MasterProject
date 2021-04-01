@@ -274,16 +274,16 @@
  <HintPath>D:/Program Files/Unity 3d/Unity Editor/2019.4.21f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.Editor">
- <HintPath>D:/Dokumenty/My Workspace/Unity/MasterProject/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Editor.dll</HintPath>
+ <HintPath>D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.Tracker">
- <HintPath>D:/Dokumenty/My Workspace/Unity/MasterProject/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Tracker.dll</HintPath>
+ <HintPath>D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Tracker.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.StandardEvents">
- <HintPath>D:/Dokumenty/My Workspace/Unity/MasterProject/Library/PackageCache/com.unity.analytics@3.3.5/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
+ <HintPath>D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/Library/PackageCache/com.unity.analytics@3.3.5/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
  </Reference>
  <Reference Include="nunit.framework">
- <HintPath>D:/Dokumenty/My Workspace/Unity/MasterProject/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
+ <HintPath>D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>D:/Program Files/Unity 3d/Unity Editor/2019.4.21f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -640,19 +640,19 @@
  <HintPath>D:/Program Files/Unity 3d/Unity Editor/2019.4.21f1/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Tilemap.Editor">
- <HintPath>D:/Dokumenty/My Workspace/Unity/MasterProject/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+ <HintPath>D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>D:/Dokumenty/My Workspace/Unity/MasterProject/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>D:/Dokumenty/My Workspace/Unity/MasterProject/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.TestRunner">
- <HintPath>D:/Dokumenty/My Workspace/Unity/MasterProject/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+ <HintPath>D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.TestRunner">
- <HintPath>D:/Dokumenty/My Workspace/Unity/MasterProject/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+ <HintPath>D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

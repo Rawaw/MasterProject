@@ -264,13 +264,13 @@
  <HintPath>D:/Program Files/Unity 3d/Unity Editor/2019.4.21f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.Editor">
- <HintPath>D:/Dokumenty/My Workspace/Unity/MasterProject/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Editor.dll</HintPath>
+ <HintPath>D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.Tracker">
- <HintPath>D:/Dokumenty/My Workspace/Unity/MasterProject/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Tracker.dll</HintPath>
+ <HintPath>D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Tracker.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.StandardEvents">
- <HintPath>D:/Dokumenty/My Workspace/Unity/MasterProject/Library/PackageCache/com.unity.analytics@3.3.5/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
+ <HintPath>D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/Library/PackageCache/com.unity.analytics@3.3.5/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>D:/Program Files/Unity 3d/Unity Editor/2019.4.21f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -618,10 +618,10 @@
  <HintPath>D:/Program Files/Unity 3d/Unity Editor/2019.4.21f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>D:/Dokumenty/My Workspace/Unity/MasterProject/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>D:/Dokumenty/My Workspace/Unity/MasterProject/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
