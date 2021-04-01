@@ -8,11 +8,11 @@ public class PlayerController : MonoBehaviour
     public float runSpeed;
     public Animator animator;
 
-    Vector3 prevPosition;
     float horizontalMovement = 0f;
     bool jump = false;
     bool isJumping = false;
     bool isFalling = false;
+    bool isClinging = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,33 +27,22 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetButtonDown("Jump")){
             jump = true;
-            //isJumping = true;
         }
 
-        
+        isJumping = controller.isJumping();
+        isFalling = controller.isFalling();
+        isClinging = controller.isClinging();
 
         animator.SetFloat("Speed",Mathf.Abs(horizontalMovement));
         animator.SetBool("IsJumping",isJumping);
         animator.SetBool("IsFalling",isFalling);
-
-        
+        animator.SetBool("IsClinging",isClinging);
     }
 
     void FixedUpdate() {
 
         controller.Move(horizontalMovement*Time.fixedDeltaTime,false,jump);
         jump = false;
-
-        if(transform.position.y < prevPosition.y-0.03f){
-            isFalling = true;
-        }else if(transform.position.y > prevPosition.y+0.03){
-            isJumping = true;
-            isFalling = false;
-        }else {
-            isFalling = false;
-            isJumping = false;
-        }
-        prevPosition = transform.position;
     }
 
     public void OnLanding(){

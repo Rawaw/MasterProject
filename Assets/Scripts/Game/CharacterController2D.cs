@@ -10,14 +10,26 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] private LayerMask m_WhatIsGround;							// A mask determining what is ground to the character
 	[SerializeField] private Transform m_GroundCheck;							// A position marking where to check if the player is grounded.
 	[SerializeField] private Transform m_CeilingCheck;							// A position marking where to check for ceilings
+	[SerializeField] private Transform m_WallCheck;							// A position marking where to check for wall
 	[SerializeField] private Collider2D m_CrouchDisableCollider;				// A collider that will be disabled when crouching
 
-	const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+	const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
 	private bool m_Grounded;            // Whether or not the player is grounded.
-	const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
+	const float k_CeilingRadius = .1f; // Radius of the overlap circle to determine if the player can stand up
+	const float k_WallClingRadius = .1f; // Radius of the overlap circle to determine if touching wall
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
+
+	public int maxEnergy;
+	public float clingForce;
+	public float clingJumpForce;
+
+	private int currentEnergy = 0;
+	private Vector3 prevPosition;
+	private bool falling = false;
+	private bool jumping = false;
+	private bool wallCling = true;
 
 	[Header("Events")]
 	[Space]
@@ -43,6 +55,10 @@ public class CharacterController2D : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+		if(m_Grounded){
+			currentEnergy = maxEnergy;
+		}
+
 		bool wasGrounded = m_Grounded;
 		m_Grounded = false;
 
@@ -57,6 +73,19 @@ public class CharacterController2D : MonoBehaviour
 				if (!wasGrounded)
 					OnLandEvent.Invoke();
 			}
+		}
+
+		checkVerticalStatus();
+
+		if(Physics2D.OverlapCircle(m_WallCheck.position, k_WallClingRadius, m_WhatIsGround) && !m_Grounded){
+			if(falling)
+				m_Rigidbody2D.drag = clingForce;
+			else
+				m_Rigidbody2D.drag = 0;
+			wallCling = true;
+		}else{
+			m_Rigidbody2D.drag = 0;
+			wallCling = false;
 		}
 	}
 
@@ -128,8 +157,20 @@ public class CharacterController2D : MonoBehaviour
 		{
 			// Add a vertical force to the player.
 			m_Grounded = false;
-			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+			//m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+			m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_JumpForce);
+		}else if(jump && wallCling){
+			if(m_FacingRight){
+				m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x - clingJumpForce, m_JumpForce);
+			}else{
+				m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x + clingJumpForce, m_JumpForce);
+			}
+			
+		}else if(jump && currentEnergy > 0){
+			currentEnergy--;
+			m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_JumpForce);
 		}
+		
 	}
 
 
@@ -144,7 +185,30 @@ public class CharacterController2D : MonoBehaviour
 		transform.localScale = theScale;
 	}
 
-	public bool isJumping(){
-		return m_Grounded;
+	private void checkVerticalStatus(){
+
+		if(m_Rigidbody2D.velocity.y < -0.01f){
+            falling = true;
+			jumping = false;
+        }else if(m_Rigidbody2D.velocity.y > 0.01f){
+            jumping = true;
+            falling = false;
+        }else {
+            falling = false;
+            jumping = false;
+        }
+        prevPosition = transform.position;
+
 	}
+
+	public bool isFalling(){
+		return falling;
+	}
+	public bool isJumping(){
+		return jumping;
+	}
+	public bool isClinging(){
+		return (wallCling && !m_Grounded);
+	}
+
 }
