@@ -21,15 +21,21 @@ public class CharacterController2D : MonoBehaviour
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
 
+	[Header("Ability Settings")]
+	public bool canMultiJump = false;
+	public bool canWallCling = false;
+	public bool canDash = false;
 	public int maxEnergy;
 	public float clingForce;
 	public float clingJumpForce;
+	public float dashForce;
 
 	private int currentEnergy = 0;
 	private Vector3 prevPosition;
 	private bool falling = false;
 	private bool jumping = false;
 	private bool wallCling = true;
+	private bool dashReady = true;
 
 	[Header("Events")]
 	[Space]
@@ -55,8 +61,9 @@ public class CharacterController2D : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if(m_Grounded){
+		if(m_Grounded || wallCling){
 			currentEnergy = maxEnergy;
+			dashReady = true;
 		}
 
 		bool wasGrounded = m_Grounded;
@@ -75,9 +82,9 @@ public class CharacterController2D : MonoBehaviour
 			}
 		}
 
-		checkVerticalStatus();
+		CheckVerticalStatus();
 
-		if(Physics2D.OverlapCircle(m_WallCheck.position, k_WallClingRadius, m_WhatIsGround) && !m_Grounded){
+		if(Physics2D.OverlapCircle(m_WallCheck.position, k_WallClingRadius, m_WhatIsGround) && !m_Grounded && canWallCling){
 			if(falling)
 				m_Rigidbody2D.drag = clingForce;
 			else
@@ -90,7 +97,7 @@ public class CharacterController2D : MonoBehaviour
 	}
 
 
-	public void Move(float move, bool crouch, bool jump)
+	public void Move(float move, bool crouch)
 	{
 		// If crouching, check to see if the character can stand up
 		if (!crouch)
@@ -152,27 +159,40 @@ public class CharacterController2D : MonoBehaviour
 				Flip();
 			}
 		}
-		// If the player should jump...
-		if (m_Grounded && jump)
-		{
-			// Add a vertical force to the player.
-			m_Grounded = false;
-			//m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-			m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_JumpForce);
-		}else if(jump && wallCling){
-			if(m_FacingRight){
-				m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x - clingJumpForce, m_JumpForce);
-			}else{
-				m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x + clingJumpForce, m_JumpForce);
-			}
-			
-		}else if(jump && currentEnergy > 0){
-			currentEnergy--;
-			m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_JumpForce);
-		}
 		
 	}
 
+	public void Jump(bool jump){
+		if(jump){
+			if (m_Grounded)
+			{
+				m_Grounded = false;
+				m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_JumpForce);
+			}else if(wallCling){
+				if(m_FacingRight){
+					m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x - clingJumpForce, m_JumpForce);
+				}else{
+					m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x + clingJumpForce, m_JumpForce);
+				}
+			}else if(currentEnergy > 0 && canMultiJump){
+				currentEnergy--;
+				m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_JumpForce);
+			}
+		}
+	}
+
+	public void Dash(bool dash){
+		if(dash && canDash && dashReady){
+			if(m_FacingRight ^ wallCling){
+				m_Rigidbody2D.velocity = new Vector2(dashForce, 4f);
+			}else{
+				m_Rigidbody2D.velocity = new Vector2(-dashForce, 4f);
+			}
+			if(wallCling)
+				Flip();
+			dashReady = false;
+		}
+	}
 
 	private void Flip()
 	{
@@ -185,7 +205,7 @@ public class CharacterController2D : MonoBehaviour
 		transform.localScale = theScale;
 	}
 
-	private void checkVerticalStatus(){
+	private void CheckVerticalStatus(){
 
 		if(m_Rigidbody2D.velocity.y < -0.01f){
             falling = true;
@@ -201,14 +221,17 @@ public class CharacterController2D : MonoBehaviour
 
 	}
 
-	public bool isFalling(){
+	public bool IsFalling(){
 		return falling;
 	}
-	public bool isJumping(){
+	public bool IsJumping(){
 		return jumping;
 	}
-	public bool isClinging(){
+	public bool IsClinging(){
 		return (wallCling && !m_Grounded);
+	}
+	public bool CanDash(){
+		return (dashReady && canDash);
 	}
 
 }

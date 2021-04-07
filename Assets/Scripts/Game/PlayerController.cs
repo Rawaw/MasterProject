@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 
     float horizontalMovement = 0f;
     bool jump = false;
+    bool dash = false;
     bool isJumping = false;
     bool isFalling = false;
     bool isClinging = false;
@@ -29,9 +30,15 @@ public class PlayerController : MonoBehaviour
             jump = true;
         }
 
-        isJumping = controller.isJumping();
-        isFalling = controller.isFalling();
-        isClinging = controller.isClinging();
+        if(Input.GetButtonDown("Dash")){
+            dash = true;
+            if(controller.CanDash())
+                animator.SetTrigger("IsDashing");
+        }
+
+        isJumping = controller.IsJumping();
+        isFalling = controller.IsFalling();
+        isClinging = controller.IsClinging();
 
         animator.SetFloat("Speed",Mathf.Abs(horizontalMovement));
         animator.SetBool("IsJumping",isJumping);
@@ -41,8 +48,11 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate() {
 
-        controller.Move(horizontalMovement*Time.fixedDeltaTime,false,jump);
+        controller.Move(horizontalMovement*Time.fixedDeltaTime,false);
+        controller.Jump(jump);
+        controller.Dash(dash);
         jump = false;
+        dash = false;
     }
 
     public void OnLanding(){
