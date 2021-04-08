@@ -29,6 +29,8 @@ public class CharacterController2D : MonoBehaviour
 	public float clingForce;
 	public float clingJumpForce;
 	public float dashForce;
+	public float dashDragForce;
+	public float dashDragTime;
 
 	private int currentEnergy = 0;
 	private Vector3 prevPosition;
@@ -36,6 +38,8 @@ public class CharacterController2D : MonoBehaviour
 	private bool jumping = false;
 	private bool wallCling = true;
 	private bool dashReady = true;
+	private bool dashDrag = false;
+	private float dashDragTimer = 0f;
 
 	[Header("Events")]
 	[Space]
@@ -93,6 +97,14 @@ public class CharacterController2D : MonoBehaviour
 		}else{
 			m_Rigidbody2D.drag = 0;
 			wallCling = false;
+		}
+
+		if(dashDrag){
+			m_Rigidbody2D.velocity = new Vector3(m_Rigidbody2D.velocity.x,0f);
+			dashDragTimer -= Time.deltaTime;
+			if(dashDragTimer < 0f){
+				dashDrag = false;
+			}
 		}
 	}
 
@@ -191,6 +203,8 @@ public class CharacterController2D : MonoBehaviour
 			if(wallCling)
 				Flip();
 			dashReady = false;
+			dashDrag = true;
+			dashDragTimer = dashDragTime;
 		}
 	}
 
