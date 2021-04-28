@@ -31,6 +31,7 @@ public class CharacterController2D : MonoBehaviour
 	public float dashForce;
 	public float dashDragForce;
 	public float dashDragTime;
+	public float dashCooldown;
 
 	private int currentEnergy = 0;
 	private Vector3 prevPosition;
@@ -40,6 +41,7 @@ public class CharacterController2D : MonoBehaviour
 	private bool dashReady = true;
 	private bool dashDrag = false;
 	private float dashDragTimer = 0f;
+	private float dashCooldownTimer = 0f;
 
 	[Header("Events")]
 	[Space]
@@ -105,6 +107,10 @@ public class CharacterController2D : MonoBehaviour
 			if(dashDragTimer < 0f){
 				dashDrag = false;
 			}
+		}
+
+		if(dashCooldownTimer >= 0f){
+			dashCooldownTimer -= Time.deltaTime;
 		}
 	}
 
@@ -194,7 +200,7 @@ public class CharacterController2D : MonoBehaviour
 	}
 
 	public void Dash(bool dash){
-		if(dash && canDash && dashReady){
+		if(dash && canDash && dashReady && dashCooldownTimer <= 0f){
 			if(m_FacingRight ^ wallCling){
 				m_Rigidbody2D.velocity = new Vector2(dashForce, 4f);
 			}else{
@@ -205,6 +211,7 @@ public class CharacterController2D : MonoBehaviour
 			dashReady = false;
 			dashDrag = true;
 			dashDragTimer = dashDragTime;
+			dashCooldownTimer = dashCooldown;
 		}
 	}
 
@@ -245,7 +252,7 @@ public class CharacterController2D : MonoBehaviour
 		return (wallCling && !m_Grounded);
 	}
 	public bool CanDash(){
-		return (dashReady && canDash);
+		return (dashReady && canDash && dashCooldownTimer <= 0f);
 	}
 
 }

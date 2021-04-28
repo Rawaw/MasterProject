@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
     public CharacterController2D controller;
     public float runSpeed;
     public Animator animator;
+    public GameManager manager;
 
     float horizontalMovement = 0f;
     bool jump = false;
@@ -55,8 +57,18 @@ public class PlayerController : MonoBehaviour
         dash = false;
     }
 
+    private void OnTriggerEnter2D(Collider2D other) {
+        Tilemap map = other.GetComponent<Tilemap>(); 
+        Vector3Int cellPosition = map.WorldToCell(transform.position);
+        string tiletype = map.GetTile(cellPosition).name;
+
+        if(tiletype == "CheckPoint")
+        manager.UpdateCheckPoint();
+    }
+
     public void OnLanding(){
         //isJumping = false;
         //isFalling = false;
     }
+
 }

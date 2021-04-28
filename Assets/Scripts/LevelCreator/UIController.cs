@@ -9,6 +9,8 @@ public class UIController : MonoBehaviour
 
     public GameObject BasicMenu;
 
+    public GameObject InspectMenu;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,15 @@ public class UIController : MonoBehaviour
     }
 
     public void ToggleBasicMenu(){
-        BasicMenu.transform.position = new Vector3(BasicMenu.transform.position.x*(-1f),BasicMenu.transform.position.y,BasicMenu.transform.position.z);
+        //BasicMenu.transform.position = new Vector3(BasicMenu.transform.position.x*(-1f),BasicMenu.transform.position.y,BasicMenu.transform.position.z);
+        if(BasicMenu.active){
+            BasicMenu.SetActive(false);
+        }else{
+            BasicMenu.SetActive(true);
+        }
+    }
+
+    public void ToggleInspectMenu(){
+        InspectMenu.transform.position = new Vector3(InspectMenu.transform.position.x,InspectMenu.transform.position.y*(-1f),InspectMenu.transform.position.z);
     }
 }

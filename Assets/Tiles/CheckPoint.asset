@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: CheckPoint
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 8202206559644567579, guid: cb9c87edc21abd943895911286f48ed2, type: 3}
+  - {fileID: -4823007766866782046, guid: cb9c87edc21abd943895911286f48ed2, type: 3}
+  - {fileID: 7235617779769273252, guid: cb9c87edc21abd943895911286f48ed2, type: 3}
+  - {fileID: 1016443220868729265, guid: cb9c87edc21abd943895911286f48ed2, type: 3}
+  - {fileID: -3156708792471914703, guid: cb9c87edc21abd943895911286f48ed2, type: 3}
+  - {fileID: -3631773759279788581, guid: cb9c87edc21abd943895911286f48ed2, type: 3}
+  - {fileID: 7320021468835988862, guid: cb9c87edc21abd943895911286f48ed2, type: 3}
+  - {fileID: -1025206364303375801, guid: cb9c87edc21abd943895911286f48ed2, type: 3}
+  - {fileID: 1394163118377458480, guid: cb9c87edc21abd943895911286f48ed2, type: 3}
+  m_MinSpeed: 8
+  m_MaxSpeed: 8
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 2
