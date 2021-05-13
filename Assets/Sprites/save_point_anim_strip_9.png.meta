@@ -134,10 +134,14 @@ TextureImporter:
         width: 12
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -5, y: -9}
+        - {x: -5, y: 1}
+        - {x: 5, y: 1}
+        - {x: 5, y: -9}
       tessellationDetail: 0
       bones: []
       spriteID: b184ef9a86714d170800000000000000
@@ -155,10 +159,14 @@ TextureImporter:
         width: 12
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -5, y: -9}
+        - {x: -5, y: 1}
+        - {x: 5, y: 1}
+        - {x: 5, y: -9}
       tessellationDetail: 0
       bones: []
       spriteID: 2a894fa4dfb311db0800000000000000
@@ -176,10 +184,14 @@ TextureImporter:
         width: 12
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -5, y: -9}
+        - {x: -5, y: 1}
+        - {x: 5, y: 1}
+        - {x: 5, y: -9}
       tessellationDetail: 0
       bones: []
       spriteID: 4abe5a5e8041a6460800000000000000
@@ -197,10 +209,14 @@ TextureImporter:
         width: 12
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -5, y: -9}
+        - {x: -5, y: 1}
+        - {x: 5, y: 1}
+        - {x: 5, y: -9}
       tessellationDetail: 0
       bones: []
       spriteID: 1b90c3a59b12b1e00800000000000000
@@ -218,10 +234,14 @@ TextureImporter:
         width: 12
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -5, y: -9}
+        - {x: -5, y: 1}
+        - {x: 5, y: 1}
+        - {x: 5, y: -9}
       tessellationDetail: 0
       bones: []
       spriteID: 137fb55041e1134d0800000000000000
@@ -239,10 +259,14 @@ TextureImporter:
         width: 12
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -5, y: -9}
+        - {x: -5, y: 1}
+        - {x: 5, y: 1}
+        - {x: 5, y: -9}
       tessellationDetail: 0
       bones: []
       spriteID: bdd0b850209599dc0800000000000000
@@ -260,10 +284,14 @@ TextureImporter:
         width: 12
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -5, y: -9}
+        - {x: -5, y: 1}
+        - {x: 5, y: 1}
+        - {x: 5, y: -9}
       tessellationDetail: 0
       bones: []
       spriteID: e75c3362eb0f59560800000000000000
@@ -281,10 +309,14 @@ TextureImporter:
         width: 12
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -5, y: -9}
+        - {x: -5, y: 1}
+        - {x: 5, y: 1}
+        - {x: 5, y: -9}
       tessellationDetail: 0
       bones: []
       spriteID: 7424a325e3cb5c1f0800000000000000
@@ -302,10 +334,14 @@ TextureImporter:
         width: 12
         height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -5, y: -9}
+        - {x: -5, y: 1}
+        - {x: 5, y: 1}
+        - {x: 5, y: -9}
       tessellationDetail: 0
       bones: []
       spriteID: 03bd6d538ff095310800000000000000

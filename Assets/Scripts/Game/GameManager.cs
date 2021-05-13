@@ -8,15 +8,15 @@ public class GameManager : MonoBehaviour
     public GameObject menuPanel;
     public string mainMenuScene;
 
-    public GameObject checkPoint;
     public GameObject player;
+    public SaveData saveData;
 
     public Grid gameGrid;
 
     // Start is called before the first frame update
     void Start()
     {
-        checkPoint.transform.position = player.transform.position;
+        saveData.Initialize(gameGrid.WorldToCell(player.transform.position));
     }
 
     // Update is called once per frame
@@ -41,7 +41,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(mainMenuScene);
     }
 
-    public void UpdateCheckPoint(){
-        checkPoint.transform.position = player.transform.position;
+    public void UpdateCheckPoint(Vector3Int checkPointPos){
+        saveData.SaveState(checkPointPos);
+    }
+
+    public void RevivePlayer(){
+        player.transform.position = new Vector3(saveData.getPlayerPosition().x,saveData.getPlayerPosition().y + 0.5f,saveData.getPlayerPosition().z);
     }
 }

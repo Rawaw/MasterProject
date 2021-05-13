@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     bool isFalling = false;
     bool isClinging = false;
 
+    public Rigidbody2D rigidbody;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +48,8 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("IsJumping",isJumping);
         animator.SetBool("IsFalling",isFalling);
         animator.SetBool("IsClinging",isClinging);
+
+        
     }
 
     void FixedUpdate() {
@@ -58,17 +62,46 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Tilemap map = other.GetComponent<Tilemap>(); 
-        Vector3Int cellPosition = map.WorldToCell(transform.position);
-        string tiletype = map.GetTile(cellPosition).name;
+        Tilemap map = other.GetComponent<Tilemap>();
 
-        if(tiletype == "CheckPoint")
-        manager.UpdateCheckPoint();
+        Vector3Int cellPosition = map.WorldToCell(other.ClosestPoint(transform.position));
+        Debug.Log("Map object name: " + map.name + "\n Cell Pos: " + cellPosition.x + " " + cellPosition.y + " " + cellPosition.z);
+
+        TileBase tile = map.GetTile(cellPosition);
+        if(tile != null){
+            Debug.Log("Tile type: " + tile.GetType() + "\n Tile name: " + tile.name);
+            if(tile.name == "CheckPoint"){
+                manager.UpdateCheckPoint(cellPosition);
+            }
+        }else{
+            Debug.Log("Tile is null");
+        }
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        Tilemap map = other.collider.GetComponent<Tilemap>(); 
+        
+        switch(map.name){
+            case "GroundCollisionMap": break;
+            case "TriggerMap": break;
+            case "Water": break;
+        }
     }
 
     public void OnLanding(){
         //isJumping = false;
         //isFalling = false;
+    }
+
+    public void killCharacter(){
+        rigidbody.bodyType = RigidbodyType2D.Static;
+        animator.SetTrigger("Dying");
+    }
+
+    public void ReviveCharacter(){
+        rigidbody.bodyType = RigidbodyType2D.Dynamic;
+        manager.RevivePlayer();
     }
 
 }
