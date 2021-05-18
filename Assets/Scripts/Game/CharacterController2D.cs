@@ -25,6 +25,7 @@ public class CharacterController2D : MonoBehaviour
 	public bool canMultiJump = false;
 	public bool canWallCling = false;
 	public bool canDash = false;
+	public bool canSwim = false;
 	public int maxEnergy;
 	public float clingForce;
 	public float clingJumpForce;
@@ -40,8 +41,10 @@ public class CharacterController2D : MonoBehaviour
 	private bool wallCling = true;
 	private bool dashReady = true;
 	private bool dashDrag = false;
+	private bool inWater = false;
 	private float dashDragTimer = 0f;
 	private float dashCooldownTimer = 0f;
+	private float defaultDrag = 0f;
 
 	[Header("Events")]
 	[Space]
@@ -92,12 +95,12 @@ public class CharacterController2D : MonoBehaviour
 
 		if(Physics2D.OverlapCircle(m_WallCheck.position, k_WallClingRadius, m_WhatIsGround) && !m_Grounded && canWallCling){
 			if(falling)
-				m_Rigidbody2D.drag = clingForce;
+				m_Rigidbody2D.drag = clingForce + defaultDrag;
 			else
-				m_Rigidbody2D.drag = 0;
+				m_Rigidbody2D.drag = defaultDrag;
 			wallCling = true;
 		}else{
-			m_Rigidbody2D.drag = 0;
+			m_Rigidbody2D.drag = defaultDrag;
 			wallCling = false;
 		}
 
@@ -159,6 +162,8 @@ public class CharacterController2D : MonoBehaviour
 				}
 			}
 
+			if(inWater)
+				move = move * 0.8f;
 			// Move the character by finding the target velocity
 			Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
 			// And then smoothing it out and applying it to the character
@@ -182,7 +187,7 @@ public class CharacterController2D : MonoBehaviour
 
 	public void Jump(bool jump){
 		if(jump){
-			if (m_Grounded)
+			if (m_Grounded || inWater)
 			{
 				m_Grounded = false;
 				m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_JumpForce);
@@ -253,6 +258,21 @@ public class CharacterController2D : MonoBehaviour
 	}
 	public bool CanDash(){
 		return (dashReady && canDash && dashCooldownTimer <= 0f);
+	}
+	public bool CanSwim(){
+		return canSwim;
+	}
+
+	public void SetInWater(bool inWater){
+		this.inWater = inWater;
+		if(inWater){
+			defaultDrag = 5f;
+			m_Rigidbody2D.gravityScale = 1f;
+		}
+		else{
+			defaultDrag = 0f;
+			m_Rigidbody2D.gravityScale = 3f;
+		}
 	}
 
 }

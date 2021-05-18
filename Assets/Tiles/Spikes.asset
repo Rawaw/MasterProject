@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e4e4fc705376343a3e65b25d94f0e2, type: 3}
+  m_Name: Spikes
+  m_EditorClassIdentifier: 
+  m_Sprites:
+  - {fileID: -7609117313755494818, guid: 22de6331618219d4cba29725799b68b3, type: 3}
+  - {fileID: -7516108142878463741, guid: 22de6331618219d4cba29725799b68b3, type: 3}
+  - {fileID: 2069365182426716812, guid: 22de6331618219d4cba29725799b68b3, type: 3}
+  - {fileID: 6789346337295622119, guid: 22de6331618219d4cba29725799b68b3, type: 3}
+  - {fileID: -3809338319429296014, guid: 22de6331618219d4cba29725799b68b3, type: 3}
+  - {fileID: -434078164375403749, guid: 22de6331618219d4cba29725799b68b3, type: 3}
+  - {fileID: -3649098251215653934, guid: 22de6331618219d4cba29725799b68b3, type: 3}
+  - {fileID: 6298649868856548558, guid: 22de6331618219d4cba29725799b68b3, type: 3}
+  - {fileID: 5015688826137533926, guid: 22de6331618219d4cba29725799b68b3, type: 3}
+  - {fileID: -807844223706757641, guid: 22de6331618219d4cba29725799b68b3, type: 3}
+  - {fileID: -7828007121508757278, guid: 22de6331618219d4cba29725799b68b3, type: 3}
+  - {fileID: -4803901998155925078, guid: 22de6331618219d4cba29725799b68b3, type: 3}
+  - {fileID: 7059361979300493037, guid: 22de6331618219d4cba29725799b68b3, type: 3}
+  - {fileID: -8917714705629530510, guid: 22de6331618219d4cba29725799b68b3, type: 3}
+  - {fileID: 1853917185201900340, guid: 22de6331618219d4cba29725799b68b3, type: 3}

@@ -70,13 +70,59 @@ public class PlayerController : MonoBehaviour
         TileBase tile = map.GetTile(cellPosition);
         if(tile != null){
             Debug.Log("Tile type: " + tile.GetType() + "\n Tile name: " + tile.name);
-            if(tile.name == "CheckPoint"){
-                manager.UpdateCheckPoint(cellPosition);
+            switch(tile.name){
+                case "CheckPoint": 
+                    manager.UpdateCheckPoint(cellPosition);
+                    break;
+                case "Water16x16":
+                    if(!controller.canSwim)
+                        killCharacter();
+                    else{
+                        controller.SetInWater(true);
+                    }
+                    break;
             }
         }else{
             Debug.Log("Tile is null");
         }
 
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        Tilemap map = other.GetComponent<Tilemap>();
+
+        Vector3Int cellPosition = map.WorldToCell(other.ClosestPoint(transform.position));
+        Debug.Log("Map object name: " + map.name + "\n Cell Pos: " + cellPosition.x + " " + cellPosition.y + " " + cellPosition.z);
+
+        TileBase tile = map.GetTile(cellPosition);
+        if(tile != null){
+            Debug.Log("Tile type: " + tile.GetType() + "\n Tile name: " + tile.name);
+            switch(tile.name){
+                case "CheckPoint": 
+                    break;
+                case "Water16x16":
+                    controller.SetInWater(false);
+                    break;
+            }
+        }else{
+            Debug.Log("Tile is null");
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other) {
+        Tilemap map = other.GetComponent<Tilemap>();
+
+        Vector3Int cellPosition = map.WorldToCell(other.ClosestPoint(transform.position));
+
+        TileBase tile = map.GetTile(cellPosition);
+        if(tile != null){
+            switch(tile.name){
+                case "Water16x16":
+                    controller.SetInWater(true);
+                    break;
+            }
+        }else{
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
@@ -86,6 +132,9 @@ public class PlayerController : MonoBehaviour
             case "GroundCollisionMap": break;
             case "TriggerMap": break;
             case "Water": break;
+            case "Spikes": 
+                killCharacter();
+                break;
         }
     }
 
