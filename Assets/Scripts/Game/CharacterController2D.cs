@@ -275,4 +275,17 @@ public class CharacterController2D : MonoBehaviour
 		}
 	}
 
+	public void SetSwim(bool swim){
+		canSwim = swim;
+	}
+	public void SetCling(bool cling){
+		canWallCling = cling;
+	}
+	public void SetDash(bool dash){
+		canDash = dash;
+	}
+	public void SetMultiJump(bool multi){
+		canMultiJump = multi;
+	}
+
 }

@@ -39,6 +39,7 @@
      <Compile Include="Assets\Scripts\Game\CameraController.cs" />
      <Compile Include="Assets\Scripts\Game\CharacterController2D.cs" />
      <Compile Include="Assets\Scripts\Game\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Game\ItemScript.cs" />
      <Compile Include="Assets\Scripts\Game\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Game\SaveData.cs" />
      <Compile Include="Assets\Scripts\LevelCreator\CreatorFunctions.cs" />
