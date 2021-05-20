@@ -247,6 +247,9 @@ public class CharacterController2D : MonoBehaviour
 
 	}
 
+	public bool DashReady(){
+		return (dashReady && canDash && dashCooldownTimer <= 0f);
+	}
 	public bool IsFalling(){
 		return falling;
 	}
@@ -257,10 +260,16 @@ public class CharacterController2D : MonoBehaviour
 		return (wallCling && !m_Grounded);
 	}
 	public bool CanDash(){
-		return (dashReady && canDash && dashCooldownTimer <= 0f);
+		return canDash;
 	}
 	public bool CanSwim(){
 		return canSwim;
+	}
+	public bool CanWallCling(){
+		return canWallCling;
+	}
+	public bool CanMultiJump(){
+		return canMultiJump;
 	}
 
 	public void SetInWater(bool inWater){

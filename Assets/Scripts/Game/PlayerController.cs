@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     bool isFalling = false;
     bool isClinging = false;
 
+    int powers = 0;
+
     public Rigidbody2D rigidbody;
 
     // Start is called before the first frame update
@@ -36,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetButtonDown("Dash")){
             dash = true;
-            if(controller.CanDash())
+            if(controller.DashReady())
                 animator.SetTrigger("IsDashing");
         }
 
@@ -72,7 +74,9 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Tile type: " + tile.GetType() + "\n Tile name: " + tile.name);
                 switch(tile.name){
                     case "CheckPoint": 
-                        manager.UpdateCheckPoint(cellPosition);
+                        GetPowerStatus();
+                        Debug.Log("Powers send with: " + powers);
+                        manager.UpdateCheckPoint(cellPosition, powers);
                         break;
                     case "Water16x16":
                         if(!controller.canSwim)
@@ -153,10 +157,46 @@ public class PlayerController : MonoBehaviour
                     break;
             }
             if(other.collider.gameObject.layer == 10){
-                other.collider.gameObject.active = false;
+                other.collider.gameObject.SetActive(false);
             }
         }
         
+    }
+
+    void GetPowerStatus(){
+        powers = 0;
+        if(controller.CanMultiJump())
+            powers += 1;
+        if(controller.CanDash())
+            powers += 2;
+        if(controller.CanWallCling())
+            powers += 4;
+        if(controller.CanSwim())
+            powers += 8;
+        Debug.Log("Powers set to: " + powers);
+    }
+
+    void SetPowers(){
+        Debug.Log("Powers restored with: " + powers);
+        if(powers >= 8)
+            controller.SetSwim(true);
+        else
+            controller.SetSwim(false);
+
+        if(powers%2 == 1)
+            controller.SetMultiJump(true);
+        else
+            controller.SetMultiJump(false);
+
+        if(powers%4 > 1)
+            controller.SetDash(true);
+        else
+            controller.SetDash(false);
+        
+        if(powers%8 > 3)
+            controller.SetCling(true);
+        else
+            controller.SetCling(false);
     }
 
     public void OnLanding(){
@@ -166,13 +206,17 @@ public class PlayerController : MonoBehaviour
 
     public void killCharacter(){
         rigidbody.bodyType = RigidbodyType2D.Static;
+        //controller.SetDash(false);
         animator.SetTrigger("Dying");
-        controller.SetDash(false);
     }
 
     public void ReviveCharacter(){
+        this.GetComponent<PolygonCollider2D>().enabled = false;
+        Debug.Log("collider status: " + this.GetComponent<PolygonCollider2D>().enabled);
         rigidbody.bodyType = RigidbodyType2D.Dynamic;
-        manager.RevivePlayer();
+        manager.LoadSave(out powers);
+        SetPowers();
+        this.GetComponent<PolygonCollider2D>().enabled = true;
     }
 
 }

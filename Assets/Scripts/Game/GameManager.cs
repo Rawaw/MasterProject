@@ -11,6 +11,11 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public SaveData saveData;
 
+    public GameObject waterOrb;
+    public GameObject gloves;
+    public GameObject boots;
+    public GameObject feather;
+
     public Grid gameGrid;
 
     // Start is called before the first frame update
@@ -41,11 +46,41 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(mainMenuScene);
     }
 
-    public void UpdateCheckPoint(Vector3Int checkPointPos){
-        saveData.SaveState(checkPointPos);
+    public void UpdateCheckPoint(Vector3Int checkPointPos, int powerStatus){
+        Debug.Log("Manager saving powers as: " + powerStatus);
+        saveData.SaveState(checkPointPos, powerStatus);
     }
 
-    public void RevivePlayer(){
-        player.transform.position = new Vector3(saveData.getPlayerPosition().x,saveData.getPlayerPosition().y + 0.5f,saveData.getPlayerPosition().z);
+    public void LoadSave(out int powers){
+        //player.transform.position = new Vector3(saveData.GetPlayerPosition().x,saveData.GetPlayerPosition().y + 0.5f,saveData.GetPlayerPosition().z);
+        player.transform.position = saveData.GetPlayerPosition();
+        powers = saveData.GetPlayerPowers();
+        Debug.Log("Manager got powers as: " + powers);
+        loadMapSave(powers);
+        return;
+    }
+
+    //
+    public void loadMapSave(int powers){
+        Debug.Log("Items restoring with: " + powers);
+        if(powers >= 8)
+            waterOrb.SetActive(false);
+        else
+            waterOrb.SetActive(true);
+
+        if(powers%2 == 1)
+            feather.SetActive(false);
+        else
+            feather.SetActive(true);
+
+        if(powers%4 > 1)
+            boots.SetActive(false);
+        else
+            boots.SetActive(true);
+        
+        if(powers%8 > 3)
+            gloves.SetActive(false);
+        else
+            gloves.SetActive(true);
     }
 }
