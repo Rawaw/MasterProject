@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject menuPanel;
     public string mainMenuScene;
+    public GameObject finalScreen;
 
     public GameObject player;
     public SaveData saveData;
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
         saveData.Initialize(gameGrid.WorldToCell(player.transform.position));
     }
 
@@ -61,7 +63,7 @@ public class GameManager : MonoBehaviour
     }
 
     //
-    public void loadMapSave(int powers){
+    void loadMapSave(int powers){
         Debug.Log("Items restoring with: " + powers);
         if(powers >= 8)
             waterOrb.SetActive(false);
@@ -82,5 +84,10 @@ public class GameManager : MonoBehaviour
             gloves.SetActive(false);
         else
             gloves.SetActive(true);
+    }
+
+    public void FinishLevel(){
+        finalScreen.SetActive(true);
+        Time.timeScale = 0;
     }
 }

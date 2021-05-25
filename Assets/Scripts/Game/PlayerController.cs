@@ -85,6 +85,9 @@ public class PlayerController : MonoBehaviour
                             controller.SetInWater(true);
                         }
                         break;
+                    case "FinalDoor":
+                        manager.FinishLevel();
+                        break;
                 }
             }else{
                 Debug.Log("Tile is null");

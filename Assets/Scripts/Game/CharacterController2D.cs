@@ -276,7 +276,7 @@ public class CharacterController2D : MonoBehaviour
 		this.inWater = inWater;
 		if(inWater){
 			defaultDrag = 5f;
-			m_Rigidbody2D.gravityScale = 1f;
+			m_Rigidbody2D.gravityScale = 2f;
 		}
 		else{
 			defaultDrag = 0f;
