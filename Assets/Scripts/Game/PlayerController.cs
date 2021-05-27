@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float runSpeed;
     public Animator animator;
     public GameManager manager;
+    public ParticleSystem particles;
 
     float horizontalMovement = 0f;
     bool jump = false;
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         GetPowerStatus();
+        manager.UpdateCheckPoint(Vector3Int.FloorToInt(this.transform.position),powers);
         ReviveCharacter();
     }
 
@@ -35,12 +37,17 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetButtonDown("Jump")){
             jump = true;
+            if(controller.CanJump()){
+                particles.Play();
+            }
         }
 
         if(Input.GetButtonDown("Dash")){
             dash = true;
-            if(controller.DashReady())
+            if(controller.DashReady()){
                 animator.SetTrigger("IsDashing");
+                particles.Play();
+            }
         }
 
         isJumping = controller.IsJumping();

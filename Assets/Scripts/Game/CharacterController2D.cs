@@ -271,6 +271,9 @@ public class CharacterController2D : MonoBehaviour
 	public bool CanMultiJump(){
 		return canMultiJump;
 	}
+	public bool CanJump(){
+		return m_Grounded || (currentEnergy > 0 && canMultiJump);
+	}
 
 	public void SetInWater(bool inWater){
 		this.inWater = inWater;

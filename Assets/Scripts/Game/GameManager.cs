@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     public GameObject glovesUiImage;
     public GameObject bootsUiImage;
     public GameObject featherUiImage;
+    public GameObject itemText;
+    public Animator itemAnimator;
 
 
     // Start is called before the first frame update
@@ -115,31 +117,51 @@ public class GameManager : MonoBehaviour
 
     public void updateUi(int powers){
         if(powers >= 8){
-            waterOrbUiImage.SetActive(true);
+            if(!waterOrbUiImage.active){
+                waterOrbUiImage.SetActive(true);
+                itemText.GetComponent<UnityEngine.UI.Text>().text = "You found Water Orb!\n Now you can swim in water safely.";
+                itemAnimator.SetTrigger("OrbCollected");
+            }
         }
         else{
             waterOrbUiImage.SetActive(false);
         }
 
         if(powers%2 == 1){
-            featherUiImage.SetActive(true);
+            if(!featherUiImage.active){
+                featherUiImage.SetActive(true);
+                itemText.GetComponent<UnityEngine.UI.Text>().text = "You found Feather!\n It allows you to jump again in the air.";
+                itemAnimator.SetTrigger("FeatherCollected");
+            }
         }
         else{
             featherUiImage.SetActive(false);
         }
 
         if(powers%4 > 1){
-            bootsUiImage.SetActive(true);
+            if(!bootsUiImage.active){
+                bootsUiImage.SetActive(true);
+                itemText.GetComponent<UnityEngine.UI.Text>().text = "You found Boots!\n Now you can dash with [Shift] key.";
+                itemAnimator.SetTrigger("BootsCollected");
+            }
         }
         else{
             bootsUiImage.SetActive(false);
         }
         
         if(powers%8 > 3){
-            glovesUiImage.SetActive(true);
+            if(!glovesUiImage.active){
+                glovesUiImage.SetActive(true);
+                itemText.GetComponent<UnityEngine.UI.Text>().text = "You found Gloves!\n Now you can cling to walls and jump off them.";
+                itemAnimator.SetTrigger("GloveCollected");
+            }
         }
         else{
             glovesUiImage.SetActive(false);
         }
     }
+
+    public void RestartGame() {
+             SceneManager.LoadScene(SceneManager.GetActiveScene().name); // loads current scene
+         }
 }
