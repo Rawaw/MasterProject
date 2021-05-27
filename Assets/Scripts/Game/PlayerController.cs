@@ -24,7 +24,8 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        GetPowerStatus();
+        ReviveCharacter();
     }
 
     // Update is called once per frame
@@ -148,15 +149,23 @@ public class PlayerController : MonoBehaviour
             switch(other.collider.tag){
                 case "WaterOrb": 
                     controller.SetSwim(true);
+                    GetPowerStatus();
+                    manager.updateUi(powers);
                     break;
                 case "Feather":
                     controller.SetMultiJump(true);
+                    GetPowerStatus();
+                    manager.updateUi(powers);
                     break;
                 case "Glove":
                     controller.SetCling(true);
+                    GetPowerStatus();
+                    manager.updateUi(powers);
                     break;
                 case "Boots":
                     controller.SetDash(true);
+                    GetPowerStatus();
+                    manager.updateUi(powers);
                     break;
             }
             if(other.collider.gameObject.layer == 10){
@@ -215,7 +224,6 @@ public class PlayerController : MonoBehaviour
 
     public void ReviveCharacter(){
         this.GetComponent<PolygonCollider2D>().enabled = false;
-        Debug.Log("collider status: " + this.GetComponent<PolygonCollider2D>().enabled);
         rigidbody.bodyType = RigidbodyType2D.Dynamic;
         manager.LoadSave(out powers);
         SetPowers();

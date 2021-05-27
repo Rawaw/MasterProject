@@ -10,20 +10,29 @@ public class GameManager : MonoBehaviour
     public GameObject finalScreen;
 
     public GameObject player;
+    public GameObject checkpointMarker;
     public SaveData saveData;
+    public Grid gameGrid;
 
+    [Header("Ability Settings")]
     public GameObject waterOrb;
     public GameObject gloves;
     public GameObject boots;
     public GameObject feather;
 
-    public Grid gameGrid;
+    public GameObject waterOrbUiImage;
+    public GameObject glovesUiImage;
+    public GameObject bootsUiImage;
+    public GameObject featherUiImage;
+
 
     // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 1;
         saveData.Initialize(gameGrid.WorldToCell(player.transform.position));
+        checkpointMarker.transform.position = player.transform.position;
+        
     }
 
     // Update is called once per frame
@@ -49,45 +58,88 @@ public class GameManager : MonoBehaviour
     }
 
     public void UpdateCheckPoint(Vector3Int checkPointPos, int powerStatus){
-        Debug.Log("Manager saving powers as: " + powerStatus);
+        checkpointMarker.transform.position = checkPointPos + new Vector3(0.5f,0.8f,0f);
         saveData.SaveState(checkPointPos, powerStatus);
     }
 
     public void LoadSave(out int powers){
-        //player.transform.position = new Vector3(saveData.GetPlayerPosition().x,saveData.GetPlayerPosition().y + 0.5f,saveData.GetPlayerPosition().z);
         player.transform.position = saveData.GetPlayerPosition();
         powers = saveData.GetPlayerPowers();
-        Debug.Log("Manager got powers as: " + powers);
         loadMapSave(powers);
         return;
     }
 
     //
     void loadMapSave(int powers){
-        Debug.Log("Items restoring with: " + powers);
-        if(powers >= 8)
+        if(powers >= 8){
             waterOrb.SetActive(false);
-        else
+            waterOrbUiImage.SetActive(true);
+        }
+        else{
             waterOrb.SetActive(true);
+            waterOrbUiImage.SetActive(false);
+        }
 
-        if(powers%2 == 1)
+        if(powers%2 == 1){
             feather.SetActive(false);
-        else
+            featherUiImage.SetActive(true);
+        }
+        else{
             feather.SetActive(true);
+            featherUiImage.SetActive(false);
+        }
 
-        if(powers%4 > 1)
+        if(powers%4 > 1){
             boots.SetActive(false);
-        else
+            bootsUiImage.SetActive(true);
+        }
+        else{
             boots.SetActive(true);
+            bootsUiImage.SetActive(false);
+        }
         
-        if(powers%8 > 3)
+        if(powers%8 > 3){
             gloves.SetActive(false);
-        else
+            glovesUiImage.SetActive(true);
+        }
+        else{
             gloves.SetActive(true);
+            glovesUiImage.SetActive(false);
+        }
     }
 
     public void FinishLevel(){
         finalScreen.SetActive(true);
         Time.timeScale = 0;
+    }
+
+    public void updateUi(int powers){
+        if(powers >= 8){
+            waterOrbUiImage.SetActive(true);
+        }
+        else{
+            waterOrbUiImage.SetActive(false);
+        }
+
+        if(powers%2 == 1){
+            featherUiImage.SetActive(true);
+        }
+        else{
+            featherUiImage.SetActive(false);
+        }
+
+        if(powers%4 > 1){
+            bootsUiImage.SetActive(true);
+        }
+        else{
+            bootsUiImage.SetActive(false);
+        }
+        
+        if(powers%8 > 3){
+            glovesUiImage.SetActive(true);
+        }
+        else{
+            glovesUiImage.SetActive(false);
+        }
     }
 }
