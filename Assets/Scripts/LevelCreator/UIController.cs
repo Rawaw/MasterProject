@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-    public GameObject TileMenu;
+    public Animator animator;
 
-    public GameObject BasicMenu;
+    public GameObject basicMenu;
 
-    public GameObject InspectMenu;
+    Boolean tilesOpen = true;
+    Boolean basicOpen = false;
+    Boolean inspectorOpen = true;
 
     // Start is called before the first frame update
     void Start()
@@ -23,20 +25,37 @@ public class UIController : MonoBehaviour
         
     }
 
-    public void ToggleTileMenu(){
-        TileMenu.transform.position = new Vector3(TileMenu.transform.position.x*(-1f),TileMenu.transform.position.y,TileMenu.transform.position.z);
-    }
-
-    public void ToggleBasicMenu(){
-        //BasicMenu.transform.position = new Vector3(BasicMenu.transform.position.x*(-1f),BasicMenu.transform.position.y,BasicMenu.transform.position.z);
-        if(BasicMenu.active){
-            BasicMenu.SetActive(false);
-        }else{
-            BasicMenu.SetActive(true);
+    public void ToggleTilesMenu(){
+        if(tilesOpen){
+            animator.SetTrigger("TilesClose");
+            tilesOpen = false;
+        }
+        else{
+            animator.SetTrigger("TilesOpen");
+            tilesOpen = true;
         }
     }
 
-    public void ToggleInspectMenu(){
-        InspectMenu.transform.position = new Vector3(InspectMenu.transform.position.x,InspectMenu.transform.position.y*(-1f),InspectMenu.transform.position.z);
+    public void ToggleBasicMenu(){
+        if(basicOpen){
+            animator.SetTrigger("BasicClose");
+            basicOpen = false;
+        }
+        else{
+            animator.SetTrigger("BasicOpen");
+            basicOpen = true;
+        }
     }
+
+    public void ToggleInspectorMenu(){
+        if(inspectorOpen){
+            animator.SetTrigger("InspectorClose");
+            inspectorOpen = false;
+        }
+        else{
+            animator.SetTrigger("InspectorOpen");
+            inspectorOpen = true;
+        }
+    }
+
 }

@@ -70,7 +70,7 @@ public class CharacterController2D : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if(m_Grounded || wallCling){
+		if((m_Grounded || wallCling)&& !dashDrag){
 			currentEnergy = maxEnergy;
 			dashReady = true;
 		}
@@ -93,7 +93,7 @@ public class CharacterController2D : MonoBehaviour
 
 		CheckVerticalStatus();
 
-		if(Physics2D.OverlapCircle(m_WallCheck.position, k_WallClingRadius, m_WhatIsGround) && !m_Grounded && canWallCling){
+		if(Physics2D.OverlapCircle(m_WallCheck.position, k_WallClingRadius, m_WhatIsGround) && !m_Grounded && canWallCling && !inWater){
 			if(falling)
 				m_Rigidbody2D.drag = clingForce + defaultDrag;
 			else

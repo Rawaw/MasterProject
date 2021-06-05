@@ -9,6 +9,7 @@ TagManager:
   - Glove
   - Boots
   - Coin
+  - Background
   layers:
   - Default
   - TransparentFX
