@@ -46,11 +46,14 @@
      <Compile Include="Assets\Scripts\LevelCreator\CreatorFunctions.cs" />
      <Compile Include="Assets\Scripts\LevelCreator\CreatorManager.cs" />
      <Compile Include="Assets\Scripts\LevelCreator\CreatorMapController.cs" />
+     <Compile Include="Assets\Scripts\LevelCreator\SignManager.cs" />
      <Compile Include="Assets\Scripts\LevelCreator\UIController.cs" />
      <Compile Include="Assets\Scripts\MapUtils.cs" />
      <Compile Include="Assets\Scripts\Menu\MenuManager.cs" />
      <Compile Include="Assets\Scripts\MenuUtils.cs" />
      <Compile Include="Assets\Scripts\TileScripts\CustomTerrainTile.cs" />
+     <Compile Include="Assets\Scripts\TileScripts\InformationalTile.cs" />
+     <Compile Include="Assets\Scripts\TileScripts\SpecialTile.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
