@@ -8,15 +8,10 @@ using UnityEngine.Tilemaps;
 public class SpecialTile : Tile
 {
     
-    string description = "Default";
-    string additionalText = "default";
+    public string description = "Default";
 
     public string getDescription(){
         return description;
-    }
-
-    public void setDescription(string text){
-        description = text;
     }
 
     #if UNITY_EDITOR

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +17,7 @@ public class CreatorFunctions : MonoBehaviour
 
     public Text descriptionText;
     public GameObject messageInputBox;
+    public GameObject rectBox;
 
     [Header("TileMaps")]
     public Tilemap selectionMap;
@@ -43,13 +44,13 @@ public class CreatorFunctions : MonoBehaviour
     Vector3Int? playerPosition;
     Vector3Int? exitPosition;
     Vector3Int? orbPosition;
-    Vector3Int? bootsPosition = null;
+    Vector3Int? bootsPosition;
     Vector3Int? glovePosition;
     Vector3Int? featherPosition;
     Vector3Int? selectionPosition;
 
     private Vector3Int previousMousePos = new Vector3Int();
-    Vector2 rectStart;
+
 
     // Start is called before the first frame update
     void Start()
@@ -77,11 +78,22 @@ public class CreatorFunctions : MonoBehaviour
                 break;
                 case toolSelection.Paint:
                     SelectedMapFunction(selectedPosition);
-                    if(Input.GetMouseButtonDown(0)){
-                        rectStart = point;
-                    }
-                    if(Input.GetMouseButton(0)){
-                        //EditorGUI.DrawRect(new Rect(rectStart.x, rectStart.y, rectStart.x-point.x, rectStart.y-point.y), Color.blue);
+                    if(selectedSecondaryTool == toolSecondary.Rect){
+                        if(Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)){
+                            rectBox.SetActive(true);
+                            rectBox.transform.position = new Vector3(point.x,point.y,0f);
+                            if(Input.GetMouseButtonDown(0)){
+                                rectBox.GetComponent<SpriteRenderer>().color = new Color(0f, 0.5f, 1f, 0.5f);
+                            }else{
+                                rectBox.GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0f, 0.5f);
+                            }
+                        }
+                        if(Input.GetMouseButton(0) || Input.GetMouseButton(1)){
+                            rectBox.transform.localScale = new Vector3(point.x - rectBox.transform.position.x,point.y - rectBox.transform.position.y, 1f);
+                        }
+                        if(Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1)){
+                            rectBox.SetActive(false);
+                        }
                     }
                 break;
             }
@@ -130,14 +142,16 @@ public class CreatorFunctions : MonoBehaviour
             if(selectedTile != null)
             PaintTiles(selectedMap,selectedTile,position);
         }else{
-            if(Input.GetMouseButtonDown(0))
+            if(Input.GetMouseButtonDown(0)){
+                removeSpecialMark(position,selectedMap);
                 PaintSpecialTiles(selectedMap,selectedTile,position);
+            }
         }
         if(!IsSpecialTile(selectedMap.GetTile(position))){
             RemoveTiles(selectedMap,position);
             //selectedMap.SetTile(position, null);
         }else{
-            removeSpecialMark(position,selectedMap);
+            //removeSpecialMark(position,selectedMap);
             RemoveTiles(selectedMap,position);
             //selectedMap.SetTile(position, null);
         }
@@ -222,56 +236,56 @@ public class CreatorFunctions : MonoBehaviour
     }
 
     void PaintSpecialTiles(Tilemap targetMap, TileBase targetTile,Vector3Int position){
-        targetMap.SetTile(position,targetTile);
-        SpecialTile temp = (SpecialTile)targetMap.GetTile(position);
+        //targetMap.SetTile(position,targetTile);
+        //SpecialTile temp = (SpecialTile)targetMap.GetTile(position);
         switch(targetTile.name){
             case "Player": 
                 if(playerPosition != null){
                     targetMap.SetTile((Vector3Int)playerPosition, null);
                 }
                 playerPosition = position;
-                temp.setDescription("It's a Player character. The player will be able to move with this character.");
+                //temp.setDescription("It's a Player character. The player will be able to move with this character.");
             break;
             case "Orb":
                 if(orbPosition != null){
                     targetMap.SetTile((Vector3Int)orbPosition, null);
                 }
                 orbPosition = position;
-                temp.setDescription("It's Water Orb item, that allows moving in water safely");
+                //temp.setDescription("It's Water Orb item, that allows moving in water safely");
             break;
             case "Glove":
                 if(glovePosition != null){
                     targetMap.SetTile((Vector3Int)glovePosition, null);
                 }
                 glovePosition = position;
-                temp.setDescription("It's a Glove item, that allows grabbing walls");
+                //temp.setDescription("It's a Glove item, that allows grabbing walls");
             break;
             case "Feather":
                 if(featherPosition != null){
                     targetMap.SetTile((Vector3Int)featherPosition, null);
                 }
                 featherPosition = position;
-                temp.setDescription("It's a Feather item, that gives double jump ability");
+                //temp.setDescription("It's a Feather item, that gives double jump ability");
             break;
             case "Boots":
                 if(bootsPosition != null){
                     targetMap.SetTile((Vector3Int)bootsPosition, null);
                 }
                 bootsPosition = position;
-                temp.setDescription("It's a Boots item, that gives dash ability");
+                //temp.setDescription("It's a Boots item, that gives dash ability");
             break;
             case "Sign":
-                temp.setDescription("It's an information sign. It shows it's message, when player stands on it");
+                //temp.setDescription("It's an information sign. It shows it's message, when player stands on it");
             break;
             case "FinalDoor":
                 if(exitPosition != null){
                     targetMap.SetTile((Vector3Int)exitPosition, null);
                 }
                 exitPosition = position;
-                temp.setDescription("It's an Exit door. Once reached, level is completed");
+                //temp.setDescription("It's an Exit door. Once reached, level is completed");
             break;
             case "CheckPoint":
-                temp.setDescription("It saves game state on reaching one. After player character's death, game is returned to latest check point");
+                //temp.setDescription("It saves game state on reaching one. After player character's death, game is returned to latest check point");
             break;
         }
         targetMap.SetTile(position,targetTile);
@@ -396,21 +410,27 @@ public class CreatorFunctions : MonoBehaviour
         switch(map.GetTile(position).name){
                         case "Player": 
                             playerPosition = null;
+                            Debug.Log("Removing player mark");
                             break;
                         case "Orb":
                             orbPosition = null;
+                            Debug.Log("Removing orb mark");
                             break;
                         case "Glove":
                             glovePosition = null;
+                            Debug.Log("Removing glove mark");
                             break;
                         case "Feather":
                             featherPosition = null;
+                            Debug.Log("Removing feather mark");
                             break;
                         case "Boots":
                             bootsPosition = null;
+                            Debug.Log("Removing boots mark");
                             break;
                         case "FinalDoor":
                             exitPosition = null;
+                            Debug.Log("Removing door mark");
                             break;
                     }
     }
