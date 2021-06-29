@@ -15,8 +15,11 @@ public class CreatorFunctions : MonoBehaviour
     private toolSelection selectedTool = 0;
     private toolSecondary selectedSecondaryTool = 0;
 
-    //public Text descriptionText;
-    //public GameObject messageInputBox;
+[SerializeField] private LayerMask m_WhatIsGround;
+    public Text descriptionText;
+    GameObject signMessageObject;
+    public GameObject signMessageBox;
+    public GameObject playerMenuBox;
     public GameObject rectBox;      //obiekt kwadratu do wizualizacji zaznaczania narzędziem kwadratu
 
     [Header("TileMaps")]
@@ -48,6 +51,7 @@ public class CreatorFunctions : MonoBehaviour
 
     Vector3Int startRectBox;        //pozycja początku kwadratu zaznaczenia
     Vector3Int endRectBox;          //pozycja końca kwadratu zaznaczenia
+    Vector3 point;
 
     //zmienne danych klocków specjalnych
     Vector3Int? playerPosition;
@@ -70,7 +74,7 @@ public class CreatorFunctions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int mapPoint = selectedMap.WorldToCell(point);
 
         if(!MenuUtils.IsPointerOverUIObject()){
@@ -115,11 +119,17 @@ public class CreatorFunctions : MonoBehaviour
                 if(selectedSecondaryTool == toolSecondary.Free){
                     ModifyTiles(selectedMap,selectedTile,mapPoint);
                 }
+                if(selectedSecondaryTool == toolSecondary.Rect){
+                    ModifyTilesRectUpdate(mapPoint);
+                }
             }
         }else
         if(Input.GetMouseButton(1)){
             if(selectedSecondaryTool == toolSecondary.Free){
                 ModifyTiles(selectedMap,null,mapPoint);
+            }
+            if(selectedSecondaryTool == toolSecondary.Rect){
+                ModifyTilesRectUpdate(mapPoint);
             }
         }
 
@@ -145,24 +155,32 @@ public class CreatorFunctions : MonoBehaviour
 
     //Zaznaczenie klocka i czynności z tym związane
     void SelectTile(Vector3Int mapPoint){
-        //TODO: wyciągnięcie danego klocka i danych z niego
-        //TODO: dorobić obiekt tworzony ze znakiem zawierający treść znaku
-        //TODO: utworzyć panel opcji gracza
-            //jeżeli postać gracza wyświetl panel opcji gracza
-            //jeżeli znak wyświetl panel opcji znaku
         selectionMap.SetTile(mapPoint, selectionTile);
+        if(selectedMap.GetTile(mapPoint) != null)
         switch(selectedMap.GetTile(mapPoint).name){
             case "Player":
+                //playerMenuBox.SetActive(true);
             break;
             case "Sign":
+                signMessageBox.SetActive(true);
+                Vector2 pos = new Vector2(mapPoint.x+0.5f,mapPoint.y+0.5f);
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, 0.5f);
+                if(colliders.Length > 0){
+                    signMessageObject = colliders[0].gameObject;
+                    signMessageBox.GetComponent<TMP_InputField>().text = signMessageObject.GetComponent<Text>().text;
+                }else{
+                    Debug.Log("Failed to get sign message object.");
+                }
             break;
         }
     }
 
     //Działania związane z odznaczeniem wyboru
     void ClearSelection(){
-        //TODO: wyczyścić przechowywany wybrany obiekt i wyłączyć specjalne panele
         selectionMap.ClearAllTiles();
+        signMessageObject = null;
+        signMessageBox.SetActive(false);
+        //playerMenuBox.SetActive(false);
     }
 
     //Dodawanie lub usuwanie klocków z mapy zależne od narzędzia
@@ -175,15 +193,15 @@ public class CreatorFunctions : MonoBehaviour
     void ModifyTilesRectStart(TileBase tile, Vector3Int mapPoint){
         rectBox.SetActive(true);
         startRectBox = new Vector3Int(mapPoint.x,mapPoint.y,0);
-        rectBox.transform.position = new Vector3(mapPoint.x,mapPoint.y,0f);
+        rectBox.transform.position = new Vector3(point.x,point.y,0f);
         if(tile != null){
             rectBox.GetComponent<SpriteRenderer>().color = new Color(0f, 0.5f, 1f, 0.5f);
         }else{
             rectBox.GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0f, 0.5f);
         }
     }
-    void ModifyTilesRectUpdate(Tilemap map, TileBase tile, Vector3Int mapPoint){
-        rectBox.transform.localScale = new Vector3(mapPoint.x - rectBox.transform.position.x,mapPoint.y - rectBox.transform.position.y, 1f);
+    void ModifyTilesRectUpdate(Vector3Int mapPoint){
+        rectBox.transform.localScale = new Vector3(point.x - rectBox.transform.position.x,point.y - rectBox.transform.position.y, 1f);
     }
     void ModifyTilesRectEnd(Tilemap map, TileBase tile, Vector3Int mapPoint){
         rectBox.SetActive(false);
@@ -206,6 +224,10 @@ public class CreatorFunctions : MonoBehaviour
 
     void RemoveTile(Tilemap map, Vector3Int mapPoint){
         ModifySpecialTile(map.GetTile(mapPoint), null);
+        if(map.GetTile(mapPoint) != null)
+        if(map.GetTile(mapPoint).name == "Sign"){
+            RemoveSign(mapPoint);
+        }
         map.SetTile(mapPoint,null);
     }
     void PaintTile(Tilemap map, TileBase tile, Vector3Int mapPoint){
@@ -235,9 +257,6 @@ public class CreatorFunctions : MonoBehaviour
             case "FinalDoor":
                 ModifySpecial(ref exitPosition, mapPoint);
             break;
-            case "Sign":
-                //TODO: modyfikacje na znakach (usuwanie\dodawanie\zastępowanie)
-            break;
         }
     }
     void ModifySpecial(ref Vector3Int? lastPosition,Vector3Int? mapPoint){
@@ -247,6 +266,15 @@ public class CreatorFunctions : MonoBehaviour
         }
         if(mapPoint != null){
             lastPosition = mapPoint;
+        }
+    }
+    void RemoveSign(Vector3Int mapPoint){
+        Vector2 pos = new Vector2(mapPoint.x+0.5f,mapPoint.y+0.5f);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, 0.5f);
+        if(colliders.Length > 0){
+            Destroy(colliders[0].gameObject);
+        }else{
+            Debug.Log("Failed to get sign message object.");
         }
     }
 
@@ -265,6 +293,11 @@ public class CreatorFunctions : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void ChangeSignMessage(String newMessage){
+        signMessageObject.GetComponent<Text>().text = newMessage;
+        Debug.Log("Text changed to: " + newMessage);
     }
 
     //------------------------------------------------------------------------------------
@@ -384,6 +417,10 @@ public class CreatorFunctions : MonoBehaviour
                 tileButtons[activeTileButton].GetComponent<Button>().interactable = false;
             }
         }
+    }
+
+    public void SetDescription(string description){
+        descriptionText.text = description;
     }
 
 }
