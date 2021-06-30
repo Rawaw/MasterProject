@@ -2,33 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class MapData
 {
+    string mapName;
 
-    public struct sign{
-        public int x;
-        public int y;
-        public string message;
-    }
-
-    Vector2Int mapSize;
+    int mapSizeX;
+    int mapSizeY;
     int signAmount;
     int[,] foreMap;
     int[,] backMap;
-    sign[] signs;
+    MapUtils.sign[] signs;
     
     public void ResetData(){
-        mapSize = Vector2Int.zero;
+        mapSizeX = 0;
+        mapSizeY = 0;
         signAmount = 0;
         foreMap = new int[,]{};
         backMap = new int[,]{};
-        signs = new sign[]{};
+        signs = new MapUtils.sign[]{};
     }
 
+    public void SetMapName(string name){
+        mapName = name;
+    }
     public void SetMapSize(Vector2Int size){
-        mapSize = size;
-        foreMap = new int[mapSize.x,mapSize.y];
-        backMap = new int[mapSize.x,mapSize.y];
+        mapSizeX = size.x;
+        mapSizeY = size.y;
+        //foreMap = new int[mapSizeX,mapSizeY];
+        //backMap = new int[mapSizeX,mapSizeY];
     }
     public void SetForeMap(int[,] map){
         foreMap = map;
@@ -38,14 +40,18 @@ public class MapData
     }
     public void SetSignAmount(int amount){
         signAmount = amount;
-        signs = new sign[signAmount];
+        signs = new MapUtils.sign[signAmount];
     }
-    public void SetSigns(sign[] signList){
+    public void SetSigns(MapUtils.sign[] signList){
         signs = signList;
     }
 
+    public string GetMapName(){
+        return mapName;
+    }
     public Vector2Int GetMapSize(){
-        return mapSize;
+        Vector2Int size = new Vector2Int(mapSizeX,mapSizeY);
+        return size;
     }
     public int GetSignAmount(){
         return signAmount;
@@ -56,7 +62,7 @@ public class MapData
     public int[,] GetBackMap(){
         return backMap;
     }
-    public sign[] GetSignsList(){
+    public MapUtils.sign[] GetSignsList(){
         return signs;
     }
 

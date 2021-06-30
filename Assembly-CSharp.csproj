@@ -46,7 +46,7 @@
      <Compile Include="Assets\Scripts\LevelCreator\CreatorFunctions.cs" />
      <Compile Include="Assets\Scripts\LevelCreator\CreatorManager.cs" />
      <Compile Include="Assets\Scripts\LevelCreator\CreatorMapController.cs" />
-     <Compile Include="Assets\Scripts\LevelCreator\SignManager.cs" />
+     <Compile Include="Assets\Scripts\LevelCreator\MapManager.cs" />
      <Compile Include="Assets\Scripts\LevelCreator\UIController.cs" />
      <Compile Include="Assets\Scripts\MapData.cs" />
      <Compile Include="Assets\Scripts\MapFileManager.cs" />

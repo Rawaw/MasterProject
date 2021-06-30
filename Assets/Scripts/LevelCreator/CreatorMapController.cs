@@ -19,9 +19,12 @@ public class CreatorMapController : MonoBehaviour
     {
         float xInput = Input.GetAxis("Horizontal");
         float yInput = Input.GetAxis("Vertical");
-        transform.Translate(xInput*Time.deltaTime*speed,yInput*Time.deltaTime*speed,0f);
+        float zoomMod = Camera.main.orthographicSize;
+        transform.Translate(xInput*Time.deltaTime*speed*zoomMod,yInput*Time.deltaTime*speed*zoomMod,0f);
 
-        Camera.main.orthographicSize -= Input.mouseScrollDelta.y;
+        if(!MenuUtils.IsPointerOverUIObject()){
+            Camera.main.orthographicSize -= Input.mouseScrollDelta.y;
+        }
 
         if(Camera.main.orthographicSize < minZoom){
             Camera.main.orthographicSize = minZoom;

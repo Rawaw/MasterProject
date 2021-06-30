@@ -6,22 +6,17 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class MapFileManager : MonoBehaviour
 {
-    static string mapName = "NoName";
-
     static string customMapPath = Application.persistentDataPath + "/CustomMaps/";
-    string saveLocation = customMapPath + mapName + ".dat";
 
-    MapData mapData;
-    List<string> mapNames;
+    static public void SaveMap(MapData map){
+        if(!Directory.Exists(customMapPath))
+        {    
+            Directory.CreateDirectory(customMapPath);
+            Debug.Log("Created directory: " + customMapPath);
+        }
+        string saveLocation = customMapPath + map.GetMapName() + ".dat";
+        Debug.Log("Saving map at: " + saveLocation);
 
-    void Start()
-    {
-        mapNames = new List<string>();
-    }
-
-    public void SaveMap(){
-        Debug.Log("Saving map as: " + mapName);
-        string saveLocation = Application.persistentDataPath + "/CustomMaps/" + mapName + ".dat";
         FileStream file;
  
         if(File.Exists(saveLocation)) 
@@ -30,21 +25,32 @@ public class MapFileManager : MonoBehaviour
             file = File.Create(saveLocation);
  
         BinaryFormatter bf = new BinaryFormatter();
-        bf.Serialize(file, mapData);
+        bf.Serialize(file, map);
         file.Close();
         Debug.Log("Map saved");
     }
 
-    public void SetMapName(string name){
-        mapName = name;
+    static public MapData LoadMap(string folder, string name){
+        string destination = Application.persistentDataPath + "/" + folder + "/" + name + ".dat";
+        Debug.Log("Loading map at: " + destination);
+        FileStream file;
+ 
+        if(File.Exists(destination)) file = File.OpenRead(destination);
+        else{
+            Debug.LogError("File not found");
+            return null;
+        }
+ 
+        BinaryFormatter bf = new BinaryFormatter();
+        MapData data = (MapData) bf.Deserialize(file);
+        file.Close();
+        Debug.Log("File loaded");
+        return data;
     }
 
-    public void SetMapData(MapData map){
-        mapData = map;
-    }
-
-    void LoadMapList(string path){
-        mapNames.Clear();
+    static List<string> LoadMapList(string folder){
+        List<string> mapNames = new List<string>();
+        string path = Application.persistentDataPath + "/" + folder;
         foreach (string file in System.IO.Directory.GetFiles(path)){
             Debug.Log("checking file: " + file);
             if(file.Substring(file.Length - 3) == "dat"){
@@ -52,46 +58,15 @@ public class MapFileManager : MonoBehaviour
                 Debug.Log("Added map: " + file);
             }
         }
+        return mapNames;
     }
 
-    /*
-    public void SaveFile()
-     {
-         string destination = Application.persistentDataPath + "/save.dat";
-         FileStream file;
- 
-         if(File.Exists(destination)) file = File.OpenWrite(destination);
-         else file = File.Create(destination);
- 
-         GameData data = new GameData(currentScore, currentName, currentTimePlayed);
-         BinaryFormatter bf = new BinaryFormatter();
-         bf.Serialize(file, data);
-         file.Close();
-     }
- 
-     public void LoadFile()
-     {
-         string destination = Application.persistentDataPath + "/save.dat";
-         FileStream file;
- 
-         if(File.Exists(destination)) file = File.OpenRead(destination);
-         else
-         {
-             Debug.LogError("File not found");
-             return;
-         }
- 
-         BinaryFormatter bf = new BinaryFormatter();
-         GameData data = (GameData) bf.Deserialize(file);
-         file.Close();
- 
-         currentScore = data.score;
-         currentName = data.name;
-         currentTimePlayed = data.timePlayed;
- 
-         Debug.Log(data.name);
-         Debug.Log(data.score);
-         Debug.Log(data.timePlayed);
+    static public bool MapExists(string name){
+        string saveLocation = Application.persistentDataPath + "/CustomMaps/" + name + ".dat";
+
+        if(File.Exists(saveLocation)) 
+            return true;
+        else 
+            return false;
     }
-    */
 }

@@ -22,6 +22,10 @@ public class CreatorFunctions : MonoBehaviour
     public GameObject playerMenuBox;
     public GameObject rectBox;      //obiekt kwadratu do wizualizacji zaznaczania narzędziem kwadratu
 
+    [Header("Save/Load related")]
+    public MapManager mapManager;
+    public GameObject saveNameBox;
+
     [Header("TileMaps")]
     public Tilemap selectionMap;    //mapa do wyświetlania zaznaczonego klocka
     public Tilemap previewMap;      //mapa do wyświetlania podglądu wybranego klocka
@@ -421,6 +425,11 @@ public class CreatorFunctions : MonoBehaviour
 
     public void SetDescription(string description){
         descriptionText.text = description;
+    }
+
+    public void SaveButton(){
+        string mapName = saveNameBox.GetComponent<Text>().text;
+        mapManager.SaveMap(mapName);
     }
 
 }
