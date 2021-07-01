@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 using UnityEditor;
 
 public class CreatorFunctions : MonoBehaviour
@@ -21,10 +22,16 @@ public class CreatorFunctions : MonoBehaviour
     public GameObject signMessageBox;
     public GameObject playerMenuBox;
     public GameObject rectBox;      //obiekt kwadratu do wizualizacji zaznaczania narzędziem kwadratu
+    public GameObject warningSign;
 
     [Header("Save/Load related")]
     public MapManager mapManager;
     public GameObject saveNameBox;
+    public GameObject saveNameInputBox;
+    public GameObject loadListContent;
+    public GameObject buttonPrefab;
+    public GameObject loadPanel;
+    string currentMapName;
 
     [Header("TileMaps")]
     public Tilemap selectionMap;    //mapa do wyświetlania zaznaczonego klocka
@@ -52,6 +59,7 @@ public class CreatorFunctions : MonoBehaviour
     public GameObject freeToolButton;
     public int activeTileButton = 0;    //zmienna określająca który przycisk klocka był jest aktywny
     public int basicTileAmount;
+    public GameObject saveButton;
 
     Vector3Int startRectBox;        //pozycja początku kwadratu zaznaczenia
     Vector3Int endRectBox;          //pozycja końca kwadratu zaznaczenia
@@ -83,6 +91,14 @@ public class CreatorFunctions : MonoBehaviour
 
         if(!MenuUtils.IsPointerOverUIObject()){
             MouseOnMap(mapPoint);
+        }
+
+        if(playerPosition == null || exitPosition == null){
+            saveButton.GetComponent<Button>().interactable = false;
+            warningSign.SetActive(true);
+        }else{
+            saveButton.GetComponent<Button>().interactable = true;
+            warningSign.SetActive(false);
         }
     }
 
@@ -304,6 +320,25 @@ public class CreatorFunctions : MonoBehaviour
         Debug.Log("Text changed to: " + newMessage);
     }
 
+    public void SetPlayerPosition(Vector3Int? newPos){
+        playerPosition = newPos;
+    }
+    public void SetExitPosition(Vector3Int? newPos){
+        exitPosition = newPos;
+    }
+    public void SetBootsPosition(Vector3Int? newPos){
+        bootsPosition = newPos;
+    }
+    public void SetFeatherPosition(Vector3Int? newPos){
+        featherPosition = newPos;
+    }
+    public void SetGlovePosition(Vector3Int? newPos){
+        glovePosition = newPos;
+    }
+    public void SetOrbPosition(Vector3Int? newPos){
+        orbPosition = newPos;
+    }
+
     //------------------------------------------------------------------------------------
     //Funkcje operacji na przyciskach i UI -----------------------------------------------
     //------------------------------------------------------------------------------------
@@ -427,9 +462,35 @@ public class CreatorFunctions : MonoBehaviour
         descriptionText.text = description;
     }
 
+    //------------------------------------------------------------------------------------
+    //Funkcje związane z zapisem i odczytem ----------------------------------------------
+    //------------------------------------------------------------------------------------
+
     public void SaveButton(){
         string mapName = saveNameBox.GetComponent<Text>().text;
+        currentMapName = mapName;
         mapManager.SaveMap(mapName);
+    }
+
+    public void RefreshMapList(){
+        foreach (Transform child in loadListContent.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+        List<string> mapList = mapManager.GetMapList();
+
+        foreach(string map in mapList){
+            GameObject tempObj = Instantiate(buttonPrefab);
+            tempObj.transform.SetParent(loadListContent.transform);
+            tempObj.GetComponentInChildren<Text>().text = map;
+            tempObj.GetComponent<Button>().onClick.AddListener(delegate{LoadMap(map);});
+        }
+    }
+
+    void LoadMap(string name){
+        mapManager.LoadMap(name);
+        currentMapName = name;
+        saveNameInputBox.GetComponent<InputField>().text = name;
+        loadPanel.SetActive(false);
     }
 
 }

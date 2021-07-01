@@ -11,6 +11,8 @@ public class MapManager : MonoBehaviour
     int signCount;
     List<MapUtils.sign> signs;
 
+    public CreatorFunctions creatorFunctions;
+
     public Tilemap foreMap;
     public Tilemap backMap;
     [Header("Tiles")]
@@ -57,6 +59,12 @@ public class MapManager : MonoBehaviour
         if(currentMapName != null){
             foreMap.ClearAllTiles();
             backMap.ClearAllTiles();
+            creatorFunctions.SetBootsPosition(null);
+            creatorFunctions.SetExitPosition(null);
+            creatorFunctions.SetFeatherPosition(null);
+            creatorFunctions.SetGlovePosition(null);
+            creatorFunctions.SetOrbPosition(null);
+            creatorFunctions.SetPlayerPosition(null);
 
             Debug.Log("Loading map" + name + " with following Map size: " + currentMap.GetMapSize());
             currentMapName = name;
@@ -90,21 +98,27 @@ public class MapManager : MonoBehaviour
                     break;
                     case 21:
                         mapObject.SetTile(new Vector3Int(x,y,0),bootsTile);
+                        creatorFunctions.SetBootsPosition(new Vector3Int(x,y,0));
                     break;
                     case 22:
                         mapObject.SetTile(new Vector3Int(x,y,0),gloveTile);
+                        creatorFunctions.SetGlovePosition(new Vector3Int(x,y,0));
                     break;
                     case 23:
                         mapObject.SetTile(new Vector3Int(x,y,0),featherTile);
+                        creatorFunctions.SetFeatherPosition(new Vector3Int(x,y,0));
                     break;
                     case 24:
                         mapObject.SetTile(new Vector3Int(x,y,0),orbTile);
+                        creatorFunctions.SetOrbPosition(new Vector3Int(x,y,0));
                     break;
                     case 31:
                         mapObject.SetTile(new Vector3Int(x,y,0),playerTile);
+                        creatorFunctions.SetPlayerPosition(new Vector3Int(x,y,0));
                     break;
                     case 32:
                         mapObject.SetTile(new Vector3Int(x,y,0),exitTile);
+                        creatorFunctions.SetExitPosition(new Vector3Int(x,y,0));
                     break;
                     case 33:
                         mapObject.SetTile(new Vector3Int(x,y,0),signTile);
@@ -235,5 +249,9 @@ public class MapManager : MonoBehaviour
         tempSign.y = y-(int)mapStart.y;
 
         return tempSign;
+    }
+
+    public List<string> GetMapList(){
+        return MapFileManager.LoadMapList("CustomMaps");
     }
 }

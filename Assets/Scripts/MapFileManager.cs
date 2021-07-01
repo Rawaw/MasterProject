@@ -48,14 +48,14 @@ public class MapFileManager : MonoBehaviour
         return data;
     }
 
-    static List<string> LoadMapList(string folder){
+    static public List<string> LoadMapList(string folder){
         List<string> mapNames = new List<string>();
         string path = Application.persistentDataPath + "/" + folder;
         foreach (string file in System.IO.Directory.GetFiles(path)){
             Debug.Log("checking file: " + file);
             if(file.Substring(file.Length - 3) == "dat"){
-                mapNames.Add(file);
-                Debug.Log("Added map: " + file);
+                mapNames.Add(Path.GetFileName(file.Remove(file.Length-4)));
+                Debug.Log("Added map: " + Path.GetFileName(file.Remove(file.Length-4)));
             }
         }
         return mapNames;
