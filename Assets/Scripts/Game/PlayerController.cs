@@ -93,6 +93,9 @@ public class PlayerController : MonoBehaviour
                             controller.SetInWater(true);
                         }
                         break;
+                    case "Coin":
+                        manager.CollectCoin(cellPosition);
+                    break;
                     case "FinalDoor":
                         manager.FinishLevel();
                         break;

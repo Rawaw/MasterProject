@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class MapFileManager : MonoBehaviour
 {
-    static string customMapPath = Application.persistentDataPath + "/CustomMaps/";
+    static string customMapPath = Application.dataPath + "/CustomMaps/";
 
     static public void SaveMap(MapData map){
         if(!Directory.Exists(customMapPath))
@@ -31,7 +31,7 @@ public class MapFileManager : MonoBehaviour
     }
 
     static public MapData LoadMap(string folder, string name){
-        string destination = Application.persistentDataPath + "/" + folder + "/" + name + ".dat";
+        string destination = Application.dataPath + "/" + folder + "/" + name + ".dat";
         Debug.Log("Loading map at: " + destination);
         FileStream file;
  
@@ -50,7 +50,7 @@ public class MapFileManager : MonoBehaviour
 
     static public List<string> LoadMapList(string folder){
         List<string> mapNames = new List<string>();
-        string path = Application.persistentDataPath + "/" + folder;
+        string path = Application.dataPath + "/" + folder;
         foreach (string file in System.IO.Directory.GetFiles(path)){
             Debug.Log("checking file: " + file);
             if(file.Substring(file.Length - 3) == "dat"){
@@ -62,7 +62,7 @@ public class MapFileManager : MonoBehaviour
     }
 
     static public bool MapExists(string name){
-        string saveLocation = Application.persistentDataPath + "/CustomMaps/" + name + ".dat";
+        string saveLocation = Application.dataPath + "/CustomMaps/" + name + ".dat";
 
         if(File.Exists(saveLocation)) 
             return true;

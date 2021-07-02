@@ -39,6 +39,7 @@
      <Compile Include="Assets\Scripts\Game\CameraController.cs" />
      <Compile Include="Assets\Scripts\Game\CharacterController2D.cs" />
      <Compile Include="Assets\Scripts\Game\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Game\GameMapManager.cs" />
      <Compile Include="Assets\Scripts\Game\ItemScript.cs" />
      <Compile Include="Assets\Scripts\Game\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Game\SaveData.cs" />
@@ -52,6 +53,7 @@
      <Compile Include="Assets\Scripts\MapFileManager.cs" />
      <Compile Include="Assets\Scripts\MapUtils.cs" />
      <Compile Include="Assets\Scripts\Menu\MenuManager.cs" />
+     <Compile Include="Assets\Scripts\Menu\MenuMapManager.cs" />
      <Compile Include="Assets\Scripts\MenuUtils.cs" />
      <Compile Include="Assets\Scripts\TileScripts\CustomTerrainTile.cs" />
      <Compile Include="Assets\Scripts\TileScripts\InformationalTile.cs" />

@@ -71097,6 +71097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381c2974ac769b54787e105dc3aee666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapManager: {fileID: 0}
   menuPanel: {fileID: 1143251958}
   mainMenuScene: Menu
   finalScreen: {fileID: 1239434892}
@@ -71636,7 +71637,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

@@ -38,6 +38,8 @@ public class MapUtils
                     return 23;
                 case "Orb":
                     return 24;
+                case "Coin":
+                    return 25;
                 case "Player":
                     return 31;
                 case "FinalDoor":

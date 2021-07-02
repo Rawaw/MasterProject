@@ -13,6 +13,8 @@ public class MapData
     int[,] foreMap;
     int[,] backMap;
     MapUtils.sign[] signs;
+    int maxCoins;
+    int collectedCoins;
     
     public void ResetData(){
         mapSizeX = 0;
@@ -45,6 +47,12 @@ public class MapData
     public void SetSigns(MapUtils.sign[] signList){
         signs = signList;
     }
+    public void SetMaxCoins(int coins){
+        maxCoins = coins;
+    }
+    public void SetCollectedCoins(int coins){
+        collectedCoins = coins;
+    }
 
     public string GetMapName(){
         return mapName;
@@ -64,6 +72,12 @@ public class MapData
     }
     public MapUtils.sign[] GetSignsList(){
         return signs;
+    }
+    public int GetCollectedCoins(){
+        return collectedCoins;
+    }
+    public int GetMaxCoins(){
+        return maxCoins;
     }
 
 }

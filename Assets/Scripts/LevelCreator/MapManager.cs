@@ -25,6 +25,7 @@ public class MapManager : MonoBehaviour
     public TileBase gloveTile;
     public TileBase featherTile;
     public TileBase orbTile;
+    public TileBase coinTile;
     public TileBase playerTile;
     public TileBase exitTile;
     public TileBase signTile;
@@ -34,6 +35,8 @@ public class MapManager : MonoBehaviour
     MapData currentMap;
 
     int timer;
+
+    int maxCoins;
 
     void Start()
     {
@@ -112,6 +115,9 @@ public class MapManager : MonoBehaviour
                         mapObject.SetTile(new Vector3Int(x,y,0),orbTile);
                         creatorFunctions.SetOrbPosition(new Vector3Int(x,y,0));
                     break;
+                    case 25:
+                        mapObject.SetTile(new Vector3Int(x,y,0),coinTile);
+                    break;
                     case 31:
                         mapObject.SetTile(new Vector3Int(x,y,0),playerTile);
                         creatorFunctions.SetPlayerPosition(new Vector3Int(x,y,0));
@@ -151,6 +157,7 @@ public class MapManager : MonoBehaviour
 
     public void SaveMap(string name){
         signCount = 0;
+        maxCoins = 0;
         signs = new List<MapUtils.sign>();
         currentMap = new MapData();
         
@@ -160,6 +167,8 @@ public class MapManager : MonoBehaviour
         currentMap.SetForeMap(GetCurrentMap(foreMap));
         currentMap.SetSignAmount(signCount);
         currentMap.SetSigns(GetCurrentSigns());
+        currentMap.SetCollectedCoins(0);
+        currentMap.SetMaxCoins(maxCoins);
 
         MapFileManager.SaveMap(currentMap);
     }
@@ -216,6 +225,9 @@ public class MapManager : MonoBehaviour
                 if(map[i,j] == 33){
                     signCount++;
                     signs.Add(GetSignFromPosition(i+(int)mapStart.x,j+(int)mapStart.y));
+                }
+                if(map[i,j] == 25){
+                    maxCoins++;
                 }
             }
         }

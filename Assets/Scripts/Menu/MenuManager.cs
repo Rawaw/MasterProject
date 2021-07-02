@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
     public string sceneToLoad = "TestScene";
     public string editorScene = "LevelCreator";
+    public string gameScene;
+
+    public GameObject listButtonPrefab;
+    public GameObject customMapList;
+    public GameObject basicMapList;
+    public MenuMapManager mapManager;
 
     // Start is called before the first frame update
     void Start()
@@ -32,5 +40,39 @@ public class MenuManager : MonoBehaviour
 
     public void ExitGame(){
         Application.Quit();
+    }
+
+    public void RefreshMapLists(){
+        foreach (Transform child in basicMapList.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+        foreach (Transform child in customMapList.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        List<string> mapList = mapManager.GetMapList("Maps");
+        foreach(string map in mapList){
+            GameObject tempObj = Instantiate(listButtonPrefab);
+            int[] coins = mapManager.GetCoinInfo(map,"Maps");
+            tempObj.transform.SetParent(basicMapList.transform);
+            tempObj.GetComponentInChildren<Text>().text = map;
+            tempObj.GetComponentInChildren<TextMeshProUGUI>().text = coins[0].ToString() + "\n" + coins[1].ToString();
+            tempObj.GetComponent<Button>().onClick.AddListener(delegate{LoadLevel("Maps",map);});
+        }
+        mapList.Clear();
+        mapList = mapManager.GetMapList("CustomMaps");
+        foreach(string map in mapList){
+            GameObject tempObj = Instantiate(listButtonPrefab);
+            int[] coins = mapManager.GetCoinInfo(map,"CustomMaps");
+            tempObj.transform.SetParent(customMapList.transform);
+            tempObj.GetComponentInChildren<Text>().text = map;
+            tempObj.GetComponentInChildren<TextMeshProUGUI>().text = coins[0].ToString() + "\n" + coins[1].ToString();
+            tempObj.GetComponent<Button>().onClick.AddListener(delegate{LoadLevel("CustomMaps",map);});
+        }
+    }
+
+    public void LoadLevel(string folder, string map){
+        GameManager.ChangeCurrentMap(folder, map);
+        SceneManager.LoadScene(gameScene);
     }
 }

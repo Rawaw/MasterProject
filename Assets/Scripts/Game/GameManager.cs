@@ -2,13 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    static string currentMapName = "Tutorial";
+    static string currentMapFolder = "Maps";
+
+    public GameMapManager mapManager;
+
     public GameObject menuPanel;
     public string mainMenuScene;
     public GameObject finalScreen;
+    public GameObject coinsText;
 
+    public Tilemap triggerMap;
     public GameObject player;
     public GameObject checkpointMarker;
     public SaveData saveData;
@@ -27,14 +36,19 @@ public class GameManager : MonoBehaviour
     public GameObject itemText;
     public Animator itemAnimator;
 
+    int startupTimer = 5;
+
+    int collectedCoins = 0;
+    int coinsToCollect;
 
     // Start is called before the first frame update
     void Start()
     {
+        mapManager.LoadLevel(currentMapFolder,currentMapName);
+
         Time.timeScale = 1;
         saveData.Initialize(gameGrid.WorldToCell(player.transform.position));
         checkpointMarker.transform.position = player.transform.position;
-        
     }
 
     // Update is called once per frame
@@ -43,6 +57,14 @@ public class GameManager : MonoBehaviour
         if(Input.GetButtonDown("Cancel")){
             ToggleMenu();
         }
+
+        if(startupTimer > 0){
+            if(startupTimer == 1){
+                player.transform.position = saveData.GetPlayerPosition() + new Vector3(0.5f,0.8f,0f);
+            }
+            startupTimer--;
+        }
+        coinsText.GetComponent<Text>().text = collectedCoins.ToString() + "/" + coinsToCollect.ToString();
     }
 
     public void ToggleMenu(){
@@ -56,6 +78,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void ReturnToMenu(){
+        Time.timeScale=1;
         SceneManager.LoadScene(mainMenuScene);
     }
 
@@ -65,7 +88,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void LoadSave(out int powers){
-        player.transform.position = saveData.GetPlayerPosition();
+        player.transform.position = saveData.GetPlayerPosition() + new Vector3(0.5f,0.8f,0f);
         powers = saveData.GetPlayerPowers();
         loadMapSave(powers);
         return;
@@ -73,39 +96,55 @@ public class GameManager : MonoBehaviour
 
     //
     void loadMapSave(int powers){
-        if(powers >= 8){
-            waterOrb.SetActive(false);
-            waterOrbUiImage.SetActive(true);
-        }
-        else{
-            waterOrb.SetActive(true);
+        if(waterOrb != null){
+            if(powers >= 8){
+                waterOrb.SetActive(false);
+                waterOrbUiImage.SetActive(true);
+            }
+            else{
+                waterOrb.SetActive(true);
+                waterOrbUiImage.SetActive(false);
+            }
+        }else{
             waterOrbUiImage.SetActive(false);
         }
 
-        if(powers%2 == 1){
-            feather.SetActive(false);
-            featherUiImage.SetActive(true);
-        }
-        else{
-            feather.SetActive(true);
+        if(feather != null){
+            if(powers%2 == 1){
+                feather.SetActive(false);
+                featherUiImage.SetActive(true);
+            }
+            else{
+                feather.SetActive(true);
+                featherUiImage.SetActive(false);
+            }
+        }else{
             featherUiImage.SetActive(false);
         }
 
-        if(powers%4 > 1){
-            boots.SetActive(false);
-            bootsUiImage.SetActive(true);
-        }
-        else{
-            boots.SetActive(true);
+        if(boots != null){
+            if(powers%4 > 1){
+                boots.SetActive(false);
+                bootsUiImage.SetActive(true);
+            }
+            else{
+                boots.SetActive(true);
+                bootsUiImage.SetActive(false);
+            }
+        }else{
             bootsUiImage.SetActive(false);
         }
         
-        if(powers%8 > 3){
-            gloves.SetActive(false);
-            glovesUiImage.SetActive(true);
-        }
-        else{
-            gloves.SetActive(true);
+        if(gloves != null){
+            if(powers%8 > 3){
+                gloves.SetActive(false);
+                glovesUiImage.SetActive(true);
+            }
+            else{
+                gloves.SetActive(true);
+                glovesUiImage.SetActive(false);
+            }
+        }else{
             glovesUiImage.SetActive(false);
         }
     }
@@ -113,6 +152,7 @@ public class GameManager : MonoBehaviour
     public void FinishLevel(){
         finalScreen.SetActive(true);
         Time.timeScale = 0;
+        mapManager.UpdateCollectedCoins(currentMapFolder, currentMapName, collectedCoins);
     }
 
     public void updateUi(int powers){
@@ -162,6 +202,38 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartGame() {
-             SceneManager.LoadScene(SceneManager.GetActiveScene().name); // loads current scene
-         }
+        Time.timeScale=1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // loads current scene
+    }
+
+    public static void ChangeCurrentMap(string folder, string name){
+        currentMapFolder = folder;
+        currentMapName = name;
+    }
+
+    public void SetPlayerPosition(float x, float y){
+        player.transform.position = new Vector3(x,y,0f);
+    }
+
+    public void SetBootsObject(GameObject bootsItem){
+        boots = bootsItem;
+    }
+    public void SetGloveObject(GameObject gloveItem){
+        gloves = gloveItem;
+    }
+    public void SetOrbObject(GameObject orbItem){
+        waterOrb = orbItem;
+    }
+    public void SetFeatherObject(GameObject featherItem){
+        feather = featherItem;
+    }
+
+    public void CollectCoin(Vector3Int position){
+        triggerMap.SetTile(position,null);
+        collectedCoins++;
+    }
+
+    public void SetCoinsToCollect(int maxCoins){
+        coinsToCollect = maxCoins;
+    }
 }
