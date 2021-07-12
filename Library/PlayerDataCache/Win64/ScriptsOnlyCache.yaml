@@ -17,8 +17,10 @@ ScriptsOnlyBuild:
     - SignScript
     - SpecialTile
     - UIController
+    - UIscript
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
+    - UnityEditor.Tilemaps.GridBrushEditor
     - UnityEditor.Tilemaps.GridPaintPaletteClipboard
     - UnityEditor.Tilemaps.GridPaintPaletteWindow
     - UnityEditor.Tilemaps.GridPaintingState
@@ -48,6 +50,13 @@ ScriptsOnlyBuild:
     - TMPro.TMP_StyleSheet
     - TMPro.TextMeshPro
     - TMPro.TextMeshProUGUI
+    UnityEditor.Graphs.dll:
+    - UnityEditor.Graphs.AnimationBlendTree.Graph
+    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
+    - UnityEditor.Graphs.AnimationStateMachine.Graph
+    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -102,6 +111,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 91
       Script: {instanceID: 0}
     - Class: 95
@@ -129,25 +142,27 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12230}
     - Class: 114
-      Script: {instanceID: 12304}
+      Script: {instanceID: 12306}
     - Class: 114
-      Script: {instanceID: 12490}
+      Script: {instanceID: 12494}
     - Class: 114
-      Script: {instanceID: 12946}
+      Script: {instanceID: 12714}
     - Class: 114
-      Script: {instanceID: 12978}
+      Script: {instanceID: 12952}
     - Class: 114
-      Script: {instanceID: 13302}
+      Script: {instanceID: 12984}
     - Class: 114
-      Script: {instanceID: 13414}
+      Script: {instanceID: 13308}
     - Class: 114
-      Script: {instanceID: 13632}
+      Script: {instanceID: 13420}
     - Class: 114
-      Script: {instanceID: 13678}
+      Script: {instanceID: 13638}
     - Class: 114
-      Script: {instanceID: 13772}
+      Script: {instanceID: 13684}
     - Class: 114
-      Script: {instanceID: 51290}
+      Script: {instanceID: 13778}
+    - Class: 114
+      Script: {instanceID: 38176}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -199,6 +214,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 91
       Script: {instanceID: 0}
     - Class: 95
@@ -238,27 +257,27 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12230}
     - Class: 114
-      Script: {instanceID: 12388}
+      Script: {instanceID: 12392}
     - Class: 114
-      Script: {instanceID: 12552}
+      Script: {instanceID: 12556}
     - Class: 114
-      Script: {instanceID: 12788}
+      Script: {instanceID: 12794}
     - Class: 114
-      Script: {instanceID: 12906}
+      Script: {instanceID: 12912}
     - Class: 114
-      Script: {instanceID: 12946}
+      Script: {instanceID: 12952}
     - Class: 114
-      Script: {instanceID: 13220}
+      Script: {instanceID: 13226}
     - Class: 114
-      Script: {instanceID: 13302}
+      Script: {instanceID: 13308}
     - Class: 114
-      Script: {instanceID: 13414}
+      Script: {instanceID: 13420}
     - Class: 114
-      Script: {instanceID: 13722}
+      Script: {instanceID: 13728}
     - Class: 114
-      Script: {instanceID: 13744}
+      Script: {instanceID: 13750}
     - Class: 114
-      Script: {instanceID: 13772}
+      Script: {instanceID: 13778}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -300,6 +319,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
@@ -321,25 +344,25 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12144}
     - Class: 114
-      Script: {instanceID: 12388}
+      Script: {instanceID: 12338}
     - Class: 114
-      Script: {instanceID: 12788}
+      Script: {instanceID: 12392}
     - Class: 114
-      Script: {instanceID: 12946}
+      Script: {instanceID: 12794}
     - Class: 114
-      Script: {instanceID: 12962}
+      Script: {instanceID: 12952}
     - Class: 114
-      Script: {instanceID: 13072}
+      Script: {instanceID: 12968}
     - Class: 114
-      Script: {instanceID: 13220}
+      Script: {instanceID: 13078}
     - Class: 114
-      Script: {instanceID: 13302}
+      Script: {instanceID: 13226}
     - Class: 114
-      Script: {instanceID: 13520}
+      Script: {instanceID: 13308}
     - Class: 114
-      Script: {instanceID: 13772}
+      Script: {instanceID: 13526}
     - Class: 114
-      Script: {instanceID: 46288}
+      Script: {instanceID: 13778}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -511,7 +534,7 @@ ScriptsOnlyBuild:
     className: SignalAsset
   - hash:
       serializedVersion: 2
-      Hash: fd9b7c199611354ec66eb5e8f0d20542
+      Hash: d9d1cc133f5eabc7802e6da8e88e601a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerController
@@ -583,13 +606,13 @@ ScriptsOnlyBuild:
     className: Shadow
   - hash:
       serializedVersion: 2
-      Hash: a722badd65e7355d9b5d09e41b122f77
+      Hash: f960a7ea58c56da65971675477508141
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CreatorFunctions
   - hash:
       serializedVersion: 2
-      Hash: b2af4d424dd76d01c38576e2f598708d
+      Hash: cad9771167ab872d93f02d4b57c517ee
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -655,6 +678,12 @@ ScriptsOnlyBuild:
     className: AnimatedTile
   - hash:
       serializedVersion: 2
+      Hash: cbeee4357632bb72c3c33d491da28e67
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CoinCollector
+  - hash:
+      serializedVersion: 2
       Hash: bb5c931957ad134a50a217555e8e0f4a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -665,6 +694,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CustomTerrainTile
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MenuMapManager
   - hash:
       serializedVersion: 2
       Hash: b3ab2106268377ffe25dd18ac23dca28
@@ -745,6 +780,12 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
+      Hash: f670c65ee039f534d7d55b16c2426c6f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GameMapManager
+  - hash:
+      serializedVersion: 2
       Hash: 8cb9c869ab50566c3424fcaae4d4269b
     assemblyName: Unity.2D.Tilemap.Extras.dll
     namespaceName: UnityEngine
@@ -817,7 +858,7 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
-      Hash: a4abdb7225c64e3fff73194dfe84de53
+      Hash: 0478fbb0efdde6d4c5299954be79f14d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MenuManager
@@ -1021,19 +1062,13 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 9918e03784c9220bfd906a59ae35ea7e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: MenuMapManager
-  - hash:
-      serializedVersion: 2
-      Hash: f670c65ee039f534d7d55b16c2426c6f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: GameMapManager
+    className: UIscript
   platform: 19
   scenePathNames:
   - Assets/Scenes/Menu.unity
   - Assets/Scenes/LevelCreator.unity
   - Assets/Scenes/GameScene.unity
-  playerPath: D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/CoinBuild/MasterProject.exe
+  playerPath: D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/FinalBuild/MasterProject.exe

@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    static string currentMapName = "Tutorial";
-    static string currentMapFolder = "Maps";
+    static string currentMapName = "anotherTest";
+    static string currentMapFolder = "CustomMaps";
 
     public GameMapManager mapManager;
 
@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public string mainMenuScene;
     public GameObject finalScreen;
     public GameObject coinsText;
+    public GameObject timeText;
 
     public Tilemap triggerMap;
     public GameObject player;
@@ -33,13 +34,16 @@ public class GameManager : MonoBehaviour
     public GameObject glovesUiImage;
     public GameObject bootsUiImage;
     public GameObject featherUiImage;
-    public GameObject itemText;
+    //public GameObject itemText;
     public Animator itemAnimator;
 
     int startupTimer = 5;
 
     int collectedCoins = 0;
     int coinsToCollect;
+
+    float timer = 0;
+    int time = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +69,14 @@ public class GameManager : MonoBehaviour
             startupTimer--;
         }
         coinsText.GetComponent<Text>().text = collectedCoins.ToString() + "/" + coinsToCollect.ToString();
+
+        timer += Time.deltaTime;
+        time = (int)timer;
+        
+        if(time%60 < 10)
+        timeText.GetComponent<Text>().text = (time/60) + ":0" + (time%60);
+        else
+        timeText.GetComponent<Text>().text = (time/60) + ":" + (time%60);
     }
 
     public void ToggleMenu(){
@@ -153,13 +165,19 @@ public class GameManager : MonoBehaviour
         finalScreen.SetActive(true);
         Time.timeScale = 0;
         mapManager.UpdateCollectedCoins(currentMapFolder, currentMapName, collectedCoins);
+        mapManager.UpdateBestTime(currentMapFolder, currentMapName, time);
+    }
+
+    public void ResumeGame(){
+        finalScreen.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public void updateUi(int powers){
         if(powers >= 8){
             if(!waterOrbUiImage.active){
                 waterOrbUiImage.SetActive(true);
-                itemText.GetComponent<UnityEngine.UI.Text>().text = "You found Water Orb!\n Now you can swim in water safely.";
+                //itemText.GetComponent<UnityEngine.UI.Text>().text = "You found Water Orb!\n Now you can swim in water safely.";
                 itemAnimator.SetTrigger("OrbCollected");
             }
         }
@@ -170,7 +188,7 @@ public class GameManager : MonoBehaviour
         if(powers%2 == 1){
             if(!featherUiImage.active){
                 featherUiImage.SetActive(true);
-                itemText.GetComponent<UnityEngine.UI.Text>().text = "You found Feather!\n It allows you to jump again in the air.";
+                //itemText.GetComponent<UnityEngine.UI.Text>().text = "You found Feather!\n It allows you to jump again in the air.";
                 itemAnimator.SetTrigger("FeatherCollected");
             }
         }
@@ -181,7 +199,7 @@ public class GameManager : MonoBehaviour
         if(powers%4 > 1){
             if(!bootsUiImage.active){
                 bootsUiImage.SetActive(true);
-                itemText.GetComponent<UnityEngine.UI.Text>().text = "You found Boots!\n Now you can dash with [Shift] key.";
+                //itemText.GetComponent<UnityEngine.UI.Text>().text = "You found Boots!\n Now you can dash with [Shift] key.";
                 itemAnimator.SetTrigger("BootsCollected");
             }
         }
@@ -192,7 +210,7 @@ public class GameManager : MonoBehaviour
         if(powers%8 > 3){
             if(!glovesUiImage.active){
                 glovesUiImage.SetActive(true);
-                itemText.GetComponent<UnityEngine.UI.Text>().text = "You found Gloves!\n Now you can cling to walls and jump off them.";
+                //itemText.GetComponent<UnityEngine.UI.Text>().text = "You found Gloves!\n Now you can cling to walls and jump off them.";
                 itemAnimator.SetTrigger("GloveCollected");
             }
         }
@@ -200,6 +218,8 @@ public class GameManager : MonoBehaviour
             glovesUiImage.SetActive(false);
         }
     }
+
+    
 
     public void RestartGame() {
         Time.timeScale=1;

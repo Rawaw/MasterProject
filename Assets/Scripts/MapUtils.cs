@@ -30,6 +30,8 @@ public class MapUtils
                     return 11;
                 case "Water16x16":
                     return 12;
+                case "Water":
+                    return 12;
                 case "Boots":
                     return 21;
                 case "Glove":

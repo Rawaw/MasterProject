@@ -159,7 +159,16 @@ public class GameMapManager : MonoBehaviour
         if(coinRecord < coins){
             mapData.SetCollectedCoins(coins);
         }
-        MapFileManager.SaveMap(mapData);
+        MapFileManager.SaveMap(folder,mapData);
+    }
+
+    public void UpdateBestTime(string folder, string mapName, int time){
+        MapData mapData = MapFileManager.LoadMap(folder, mapName);
+        int timeRecord = mapData.GetBestTime();
+        if(timeRecord > time){
+            mapData.SetMapTime(time);
+        }
+        MapFileManager.SaveMap(folder,mapData);
     }
 
 }

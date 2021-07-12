@@ -38,6 +38,12 @@ public class MenuMapManager : MonoBehaviour
         return coins;
     }
 
+    public int GetTimeInfo(string name, string folder){
+        MapData mapData = MapFileManager.LoadMap(folder, name);
+        int time = mapData.GetBestTime();
+        return time;
+    }
+
     public MapUtils.mapInfo LoadMapInfo(string name, string folder){
         MapData map = MapFileManager.LoadMap(folder, name);
         MapUtils.mapInfo info = new MapUtils.mapInfo();

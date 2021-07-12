@@ -169,6 +169,7 @@ public class MapManager : MonoBehaviour
         currentMap.SetSigns(GetCurrentSigns());
         currentMap.SetCollectedCoins(0);
         currentMap.SetMaxCoins(maxCoins);
+        currentMap.SetMapTime(5940);
 
         MapFileManager.SaveMap(currentMap);
     }

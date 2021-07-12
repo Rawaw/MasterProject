@@ -23,6 +23,7 @@ public class CreatorFunctions : MonoBehaviour
     public GameObject playerMenuBox;
     public GameObject rectBox;      //obiekt kwadratu do wizualizacji zaznaczania narzędziem kwadratu
     public GameObject warningSign;
+    public GameObject musicBox;
 
     [Header("Save/Load related")]
     public MapManager mapManager;
@@ -397,6 +398,7 @@ public class CreatorFunctions : MonoBehaviour
     }
 
     void UpdateButtonState(){
+        PlayButtonSound();
         if(selectedTool == toolSelection.Selector){
             selectorToolButton.GetComponent<Button>().interactable = false;
             paintToolButton.GetComponent<Button>().interactable = true;
@@ -423,6 +425,7 @@ public class CreatorFunctions : MonoBehaviour
                 }
                 foreach(GameObject button in specialTileButtons){
                     button.GetComponent<Button>().interactable = true;
+                    button.SetActive(true);
                 }
             }else{
                 foreGroundButton.GetComponent<Button>().interactable = true;
@@ -431,6 +434,7 @@ public class CreatorFunctions : MonoBehaviour
                     button.GetComponent<Button>().interactable = true;
                 }
                 foreach(GameObject button in specialTileButtons){
+                    button.SetActive(false);
                     button.GetComponent<Button>().interactable = false;
                 }
             }
@@ -462,6 +466,9 @@ public class CreatorFunctions : MonoBehaviour
         descriptionText.text = description;
     }
 
+    public void PlayButtonSound(){
+        musicBox.GetComponent<AudioSource>().Play();
+    }
     //------------------------------------------------------------------------------------
     //Funkcje związane z zapisem i odczytem ----------------------------------------------
     //------------------------------------------------------------------------------------

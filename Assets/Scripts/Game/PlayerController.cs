@@ -5,11 +5,13 @@ using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameObject musicBox;
     public CharacterController2D controller;
     public float runSpeed;
     public Animator animator;
     public GameManager manager;
     public ParticleSystem particles;
+    public ParticleSystem waterParticle;
 
     float horizontalMovement = 0f;
     bool jump = false;
@@ -22,23 +24,49 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody2D rigidbody;
 
+    AudioSource coinSound;
+    AudioSource powerUpSound;
+    AudioSource jumpSound;
+    AudioSource dashSound;
+    AudioSource failSound;
+    AudioSource walkSound;
+    AudioSource waterSound;
+    AudioSource finishSound;
+    AudioSource checkPointSound;
+
     // Start is called before the first frame update
     void Start()
     {
         GetPowerStatus();
         manager.UpdateCheckPoint(Vector3Int.FloorToInt(this.transform.position),powers);
         ReviveCharacter();
+
+        AudioSource[] sounds = musicBox.GetComponents<AudioSource>();
+        coinSound = sounds[1];
+        powerUpSound = sounds[2];
+        jumpSound = sounds[3];
+        dashSound = sounds[4];
+        failSound = sounds[5];
+        walkSound = sounds[6];
+        waterSound = sounds[7];
+        finishSound = sounds[8];
+        checkPointSound = sounds[9];
     }
 
     // Update is called once per frame
     void Update()
     {
         horizontalMovement = Input.GetAxisRaw("Horizontal")*runSpeed;
+        /*if(horizontalMovement != 0 && !controller.IsJumping()){
+            if(!walkSound.isPlaying)
+                walkSound.Play();
+        }*/
 
         if(Input.GetButtonDown("Jump")){
             jump = true;
             if(controller.CanJump()){
                 particles.Play();
+                jumpSound.Play();
             }
         }
 
@@ -47,6 +75,7 @@ public class PlayerController : MonoBehaviour
             if(controller.DashReady()){
                 animator.SetTrigger("IsDashing");
                 particles.Play();
+                dashSound.Play();
             }
         }
 
@@ -85,6 +114,7 @@ public class PlayerController : MonoBehaviour
                         GetPowerStatus();
                         Debug.Log("Powers send with: " + powers);
                         manager.UpdateCheckPoint(cellPosition, powers);
+                        checkPointSound.Play();
                         break;
                     case "Water16x16":
                         if(!controller.canSwim)
@@ -92,13 +122,17 @@ public class PlayerController : MonoBehaviour
                         else{
                             controller.SetInWater(true);
                         }
+                        waterSound.Play();
+                        waterParticle.Play();
+                        break;
+                    case "FinalDoor":
+                        manager.FinishLevel();
+                        finishSound.Play();
                         break;
                     case "Coin":
                         manager.CollectCoin(cellPosition);
+                        coinSound.Play();
                     break;
-                    case "FinalDoor":
-                        manager.FinishLevel();
-                        break;
                 }
             }else{
                 Debug.Log("Tile is null");
@@ -121,7 +155,11 @@ public class PlayerController : MonoBehaviour
                         break;
                     case "Water16x16":
                         controller.SetInWater(false);
+                        waterSound.Play();
                         break;
+                    /*case "Coin":
+                        manager.CollectCoin(cellPosition);
+                    break;*/
                 }
             }else{
                 Debug.Log("Tile is null");
@@ -140,6 +178,10 @@ public class PlayerController : MonoBehaviour
                     case "Water16x16":
                         controller.SetInWater(true);
                         break;
+                    case "Coin":
+                        manager.CollectCoin(cellPosition);
+                        coinSound.Play();
+                    break;
                 }
             }else{
             }
@@ -161,21 +203,25 @@ public class PlayerController : MonoBehaviour
                     controller.SetSwim(true);
                     GetPowerStatus();
                     manager.updateUi(powers);
+                    powerUpSound.Play();
                     break;
                 case "Feather":
                     controller.SetMultiJump(true);
                     GetPowerStatus();
                     manager.updateUi(powers);
+                    powerUpSound.Play();
                     break;
                 case "Glove":
                     controller.SetCling(true);
                     GetPowerStatus();
                     manager.updateUi(powers);
+                    powerUpSound.Play();
                     break;
                 case "Boots":
                     controller.SetDash(true);
                     GetPowerStatus();
                     manager.updateUi(powers);
+                    powerUpSound.Play();
                     break;
             }
             if(other.collider.gameObject.layer == 10){
@@ -230,6 +276,7 @@ public class PlayerController : MonoBehaviour
         rigidbody.bodyType = RigidbodyType2D.Static;
         //controller.SetDash(false);
         animator.SetTrigger("Dying");
+        failSound.Play();
     }
 
     public void ReviveCharacter(){

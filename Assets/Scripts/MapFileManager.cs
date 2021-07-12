@@ -30,6 +30,29 @@ public class MapFileManager : MonoBehaviour
         Debug.Log("Map saved");
     }
 
+    static public void SaveMap(string folder, MapData map){
+        string tempLocation = Application.dataPath + "/" + folder + "/";
+        if(!Directory.Exists(tempLocation))
+        {    
+            Directory.CreateDirectory(tempLocation);
+            Debug.Log("Created directory: " + tempLocation);
+        }
+        string saveLocation = tempLocation + map.GetMapName() + ".dat";
+        Debug.Log("Saving map at: " + saveLocation);
+
+        FileStream file;
+ 
+        if(File.Exists(saveLocation)) 
+            file = File.OpenWrite(saveLocation);
+        else 
+            file = File.Create(saveLocation);
+ 
+        BinaryFormatter bf = new BinaryFormatter();
+        bf.Serialize(file, map);
+        file.Close();
+        Debug.Log("Map saved");
+    }
+
     static public MapData LoadMap(string folder, string name){
         string destination = Application.dataPath + "/" + folder + "/" + name + ".dat";
         Debug.Log("Loading map at: " + destination);

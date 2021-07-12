@@ -15,15 +15,7 @@ public class MapData
     MapUtils.sign[] signs;
     int maxCoins;
     int collectedCoins;
-    
-    public void ResetData(){
-        mapSizeX = 0;
-        mapSizeY = 0;
-        signAmount = 0;
-        foreMap = new int[,]{};
-        backMap = new int[,]{};
-        signs = new MapUtils.sign[]{};
-    }
+    int bestTime;
 
     public void SetMapName(string name){
         mapName = name;
@@ -53,6 +45,9 @@ public class MapData
     public void SetCollectedCoins(int coins){
         collectedCoins = coins;
     }
+    public void SetMapTime(int time){
+        bestTime = time;
+    }
 
     public string GetMapName(){
         return mapName;
@@ -78,6 +73,9 @@ public class MapData
     }
     public int GetMaxCoins(){
         return maxCoins;
+    }
+    public int GetBestTime(){
+        return bestTime;
     }
 
 }
