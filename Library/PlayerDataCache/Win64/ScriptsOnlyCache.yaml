@@ -50,13 +50,6 @@ ScriptsOnlyBuild:
     - TMPro.TMP_StyleSheet
     - TMPro.TextMeshPro
     - TMPro.TextMeshProUGUI
-    UnityEditor.Graphs.dll:
-    - UnityEditor.Graphs.AnimationBlendTree.Graph
-    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
-    - UnityEditor.Graphs.AnimationStateMachine.Graph
-    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -162,7 +155,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13778}
     - Class: 114
-      Script: {instanceID: 38176}
+      Script: {instanceID: 13810}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1032,6 +1025,12 @@ ScriptsOnlyBuild:
     className: SignalEmitter
   - hash:
       serializedVersion: 2
+      Hash: 9918e03784c9220bfd906a59ae35ea7e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: UIscript
+  - hash:
+      serializedVersion: 2
       Hash: 7072231382eb3c4871b3dd75ad0227e1
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -1060,15 +1059,9 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 9918e03784c9220bfd906a59ae35ea7e
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: UIscript
   platform: 19
   scenePathNames:
   - Assets/Scenes/Menu.unity
   - Assets/Scenes/LevelCreator.unity
   - Assets/Scenes/GameScene.unity
-  playerPath: D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/FinalBuild/MasterProject.exe
+  playerPath: D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/FinalBuild v2/MasterProject.exe

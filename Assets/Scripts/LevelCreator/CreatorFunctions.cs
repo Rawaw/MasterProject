@@ -475,6 +475,8 @@ public class CreatorFunctions : MonoBehaviour
 
     public void SaveButton(){
         string mapName = saveNameBox.GetComponent<Text>().text;
+        if(mapName == "")
+            mapName = "UnnamedMap";
         currentMapName = mapName;
         mapManager.SaveMap(mapName);
     }

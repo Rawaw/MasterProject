@@ -165,7 +165,7 @@ public class GameMapManager : MonoBehaviour
     public void UpdateBestTime(string folder, string mapName, int time){
         MapData mapData = MapFileManager.LoadMap(folder, mapName);
         int timeRecord = mapData.GetBestTime();
-        if(timeRecord > time){
+        if(timeRecord > time || timeRecord < 0){
             mapData.SetMapTime(time);
         }
         MapFileManager.SaveMap(folder,mapData);

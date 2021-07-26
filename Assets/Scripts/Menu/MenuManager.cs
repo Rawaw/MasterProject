@@ -64,10 +64,13 @@ public class MenuManager : MonoBehaviour
             tempObj.transform.SetParent(basicMapList.transform);
             tempText = tempObj.GetComponentsInChildren<Text>();
             tempText[0].text = map;
-            if((time%60) < 10)
-            tempText[1].text = (time/60) + ":0" + (time%60);
+            if(time < 0)
+                tempText[1].text = " ";
             else
-            tempText[1].text = (time/60) + ":" + (time%60);
+                if((time%60) < 10)
+                    tempText[1].text = (time/60) + ":0" + (time%60);
+                else
+                    tempText[1].text = (time/60) + ":" + (time%60);
             tempObj.GetComponentInChildren<TextMeshProUGUI>().text = coins[0].ToString() + "\n" + coins[1].ToString();
             tempObj.GetComponent<Button>().onClick.AddListener(delegate{LoadLevel("Maps",map);});
         }
@@ -80,10 +83,13 @@ public class MenuManager : MonoBehaviour
             tempObj.transform.SetParent(customMapList.transform);
             tempText = tempObj.GetComponentsInChildren<Text>();
             tempText[0].text = map;
-            if((time%60) < 10)
-            tempText[1].text = (time/60) + ":0" + (time%60);
+            if(time < 0)
+                tempText[1].text = " ";
             else
-            tempText[1].text = (time/60) + ":" + (time%60);
+                if((time%60) < 10)
+                    tempText[1].text = (time/60) + ":0" + (time%60);
+                else
+                    tempText[1].text = (time/60) + ":" + (time%60);
             tempObj.GetComponentInChildren<TextMeshProUGUI>().text = coins[0].ToString() + "\n" + coins[1].ToString();
             tempObj.GetComponent<Button>().onClick.AddListener(delegate{LoadLevel("CustomMaps",map);});
         }
