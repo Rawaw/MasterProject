@@ -20,7 +20,6 @@ ScriptsOnlyBuild:
     - UIscript
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
-    - UnityEditor.Tilemaps.GridBrushEditor
     - UnityEditor.Tilemaps.GridPaintPaletteClipboard
     - UnityEditor.Tilemaps.GridPaintPaletteWindow
     - UnityEditor.Tilemaps.GridPaintingState
@@ -599,7 +598,7 @@ ScriptsOnlyBuild:
     className: Shadow
   - hash:
       serializedVersion: 2
-      Hash: f960a7ea58c56da65971675477508141
+      Hash: c647eed682eba728e0be4a88e6a97b37
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CreatorFunctions
@@ -1064,4 +1063,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/Menu.unity
   - Assets/Scenes/LevelCreator.unity
   - Assets/Scenes/GameScene.unity
-  playerPath: D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/FinalBuild v2/MasterProject.exe
+  playerPath: D:/Dokumenty/My Workspace/GitWorkspace/MasterProject/FinalBuild v3/MasterProject.exe

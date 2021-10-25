@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class CreatorFunctions : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class CreatorFunctions : MonoBehaviour
     public GameObject rectBox;      //obiekt kwadratu do wizualizacji zaznaczania narzędziem kwadratu
     public GameObject warningSign;
     public GameObject musicBox;
+    public GameObject changesPanel;
 
     [Header("Save/Load related")]
     public MapManager mapManager;
@@ -62,6 +64,8 @@ public class CreatorFunctions : MonoBehaviour
     public int basicTileAmount;
     public GameObject saveButton;
 
+    Boolean changesMade = false;
+
     Vector3Int startRectBox;        //pozycja początku kwadratu zaznaczenia
     Vector3Int endRectBox;          //pozycja końca kwadratu zaznaczenia
     Vector3 point;
@@ -77,7 +81,6 @@ public class CreatorFunctions : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //TODO: ustawić wartości startowe
         selectedMap = foregroundMap;
         selectedTile = defaultTile;
         activeTileButton = 0;
@@ -117,6 +120,7 @@ public class CreatorFunctions : MonoBehaviour
             if(selectedTool == toolSelection.Selector){
                 SelectTile(mapPoint);
             }else{
+                changesMade = true;
                 if(selectedSecondaryTool == toolSecondary.Point){
                     ModifyTiles(selectedMap,selectedTile,mapPoint);
                 }
@@ -126,6 +130,7 @@ public class CreatorFunctions : MonoBehaviour
             }
         }else
         if(Input.GetMouseButtonDown(1)){
+            changesMade = true;
             ClearSelection();
             if(selectedSecondaryTool == toolSecondary.Point){
                 ModifyTiles(selectedMap,null,mapPoint);
@@ -463,6 +468,7 @@ public class CreatorFunctions : MonoBehaviour
     }
 
     public void SetDescription(string description){
+        changesMade = true;
         descriptionText.text = description;
     }
 
@@ -479,6 +485,7 @@ public class CreatorFunctions : MonoBehaviour
             mapName = "UnnamedMap";
         currentMapName = mapName;
         mapManager.SaveMap(mapName);
+        changesMade = false;
     }
 
     public void RefreshMapList(){
@@ -500,6 +507,14 @@ public class CreatorFunctions : MonoBehaviour
         currentMapName = name;
         saveNameInputBox.GetComponent<InputField>().text = name;
         loadPanel.SetActive(false);
+        changesMade = false;
     }
 
+    public void ExitButton(){
+        if(changesMade){
+            changesPanel.SetActive(true);
+        }else{
+            SceneManager.LoadScene("Menu");
+        }
+    }
 }
