@@ -1,6 +1,10 @@
 # MasterProject
 Platformer game with level creator made in Unity as a school project for master's degree.
 
+In a project there is latest build with 3 example levels (Build folder).
+
+---Description---
+
 In a game, player takes control of a hooded creature and needs to reach finish door on a level. As other secondary objectives are collecting coins and reaching the exit
 in best time possible. Player character can also collect special items, that give him additional abbilities.
 
